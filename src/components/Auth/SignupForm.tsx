@@ -1,0 +1,77 @@
+'use client';
+import { SubmitHandler, useForm } from 'react-hook-form';
+import { emailRegex } from '@/consts';
+import z from 'zod';
+import { signupSchema } from '@/schema/auth';
+import { zodResolver } from '@hookform/resolvers/zod';
+import FormInput from '@/components/Input/FormInput';
+import BaseForm from '../BaseForm';
+
+type FormData = z.infer<typeof signupSchema>;
+const SignupForm = () => {
+  const {
+    handleSubmit,
+    register,
+    formState: { errors, isValid, isDirty },
+  } = useForm<FormData>({
+    resolver: zodResolver(signupSchema),
+  });
+
+  const onSubmit: SubmitHandler<FormData> = (data) => {
+    if (!isValid) return;
+    console.log('signup data: ', errors);
+  };
+  return (
+    <BaseForm
+      title="Sign Up"
+      onSubmit={handleSubmit(onSubmit)}
+      onCancel={() => null}
+      submitText="Register"
+      disabled={!isValid && isDirty}
+    >
+      <section className="mt-4 flex flex-col gap-4">
+        <FormInput
+          title="Full name"
+          type="text"
+          placeholder="Full name"
+          errorMessage={errors.fullName?.message}
+          {...register('fullName', {
+            required: 'Please enter your full name',
+          })}
+        />
+
+        <FormInput
+          title="Email"
+          type="text"
+          placeholder="Email"
+          errorMessage={errors.email?.message}
+          {...register('email', {
+            required: 'Email is required',
+            pattern: {
+              value: emailRegex,
+              message: 'Invalid email format',
+            },
+          })}
+        />
+        <FormInput
+          title="Password"
+          type="password"
+          placeholder="Password"
+          errorMessage={errors.password?.message}
+          {...register('password', { required: 'Password is required' })}
+        />
+        <FormInput
+          title="Validate Password"
+          type="password"
+          placeholder="Enter password again"
+          errorMessage={errors.validatePassword?.message}
+          {...register('validatePassword', {
+            required: 'Please enter the password again',
+          })}
+        />
+      </section>
+    </BaseForm>
+  );
+};
+
+export default SignupForm;
