@@ -7,7 +7,7 @@ const AuthForm = dynamic(() => import('@/components/Auth/AuthForm'), {
 
 export default function Auth() {
   return (
-    <section className="bg-indigo-600 h-full flex">
+    <section className="bg-indigo-600 h-screen flex">
       <AuthForm />
     </section>
   );

@@ -1,14 +1,18 @@
 'use client';
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { emailRegex } from '@/consts';
+import { Routes, emailRegex } from '@/consts';
 import z from 'zod';
 import { signupSchema } from '@/schema/auth';
 import { zodResolver } from '@hookform/resolvers/zod';
 import FormInput from '@/components/Input/FormInput';
 import BaseForm from '../BaseForm';
+import { axios } from '../../utils/axios';
+import { Provider } from '@prisma/client';
+import { useRouter } from 'next/navigation';
 
 type FormData = z.infer<typeof signupSchema>;
 const SignupForm = () => {
+  const router = useRouter();
   const {
     handleSubmit,
     register,
@@ -17,9 +21,28 @@ const SignupForm = () => {
     resolver: zodResolver(signupSchema),
   });
 
-  const onSubmit: SubmitHandler<FormData> = (data) => {
+  const onSubmit: SubmitHandler<FormData> = async (data) => {
     if (!isValid) return;
-    console.log('signup data: ', errors);
+
+    try {
+      const response = await axios.post(
+        Routes.AUTH,
+        JSON.stringify({ ...data, provider: data.provider || Provider.EMAIL }),
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        },
+      );
+
+      if (!response.data) {
+        throw new Error();
+      }
+
+      router.push(Routes.DASHBOARD);
+    } catch (error) {
+      console.error('Error in signup: ', error);
+    }
   };
   return (
     <BaseForm

@@ -7,7 +7,7 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-  url      = env("POSTGRES_PRISMA_URL")
+  url      = env("DATABASE_URL")
 }
 
 enum Provider {
@@ -23,4 +23,6 @@ model User {
   updatedAt    DateTime @updatedAt @map("updated_at")
   lastLogin    DateTime @map("last_login")
   provider     Provider
+
+  @@index([email])
 }

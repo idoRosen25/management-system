@@ -1,15 +1,19 @@
 'use client';
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { emailRegex } from '@/consts';
+import { Routes, emailRegex } from '@/consts';
 import z from 'zod';
 import { loginSchema } from '@/schema/auth';
 import { zodResolver } from '@hookform/resolvers/zod';
 import FormInput from '@/components/Input/FormInput';
 import BaseForm from '../BaseForm';
 import { useState } from 'react';
+import { axios } from '../../utils/axios';
+import { Provider } from '@prisma/client';
+import { useRouter } from 'next/navigation';
 
 type FormData = z.infer<typeof loginSchema>;
 const LoginForm = () => {
+  const router = useRouter();
   const {
     handleSubmit,
     register,
@@ -19,11 +23,30 @@ const LoginForm = () => {
   });
 
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const onSubmit: SubmitHandler<FormData> = (data) => {
-    setIsSubmitting(true);
+  const onSubmit: SubmitHandler<FormData> = async (data) => {
     if (!isValid) return;
-    console.log('login data: ', data);
-    setTimeout(() => setIsSubmitting(false), 1000);
+    setIsSubmitting(true);
+
+    try {
+      const response = await axios.get(Routes.AUTH, {
+        params: {
+          ...data,
+          provider: Provider.EMAIL,
+        },
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+
+      if (!response.data) {
+        throw new Error('Invalid credentials');
+      }
+
+      router.push(Routes.DASHBOARD);
+    } catch (error) {
+      console.error('Error in login: ', error);
+    }
+    setTimeout(() => setIsSubmitting(false), 500);
   };
   return (
     <BaseForm
