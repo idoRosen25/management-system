@@ -6,10 +6,17 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "format": "npx prettier --write . --log-level silent",
+    "lint": "next lint",
+    "docker:local:up": "docker-compose --profile local up -d",
+    "prisma:generate": "npx prisma generate",
+    "prisma:validate": "npx prisma validate",
+    "migrate:postgres": "prisma migrate dev",
+    "migrate:reset": "prisma migrate reset --force"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.3.4",
+    "@prisma/client": "^5.7.1",
     "next": "14.0.4",
     "react": "^18",
     "react-dom": "^18",
@@ -25,6 +32,7 @@
     "eslint": "^8",
     "eslint-config-next": "14.0.4",
     "postcss": "^8",
+    "prisma": "^5.7.1",
     "tailwindcss": "^3.3.0",
     "typescript": "^5"
   }
