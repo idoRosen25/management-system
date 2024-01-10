@@ -2,6 +2,7 @@ import prisma from '../../../../lib/prismadb';
 import bcrypt from 'bcrypt';
 import { subMinutes } from 'date-fns';
 import { NextRequest, NextResponse } from 'next/server';
+import { cookies } from 'next/headers';
 
 export async function POST(request: NextRequest) {
   try {
@@ -18,6 +19,7 @@ export async function POST(request: NextRequest) {
       },
     });
     // return the user
+    cookies().set('lastLogin', user.lastLogin.toISOString());
     return NextResponse.json(user);
   } catch (error) {
     console.error(error);
