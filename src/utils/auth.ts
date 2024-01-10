@@ -1,4 +1,4 @@
-import { subDays } from 'date-fns';
+import { subDays, subMinutes } from 'date-fns';
 import { cookies } from 'next/headers';
 
 export const isAuthenticated = () => {
@@ -6,7 +6,7 @@ export const isAuthenticated = () => {
 
   if (!lastLogin?.value) return false;
 
-  if (new Date(lastLogin.value).getTime() < subDays(new Date(), 7).getTime())
+  if (new Date(lastLogin.value).getTime() < subMinutes(new Date(), 7).getTime())
     return false;
 
   return true;

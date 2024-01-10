@@ -1,6 +1,6 @@
 'use client';
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { Routes, emailRegex } from '@/consts';
+import { Endpoints, Routes, emailRegex } from '@/consts';
 import z from 'zod';
 import { loginSchema } from '@/schema/auth';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -28,7 +28,7 @@ const LoginForm = () => {
     setIsSubmitting(true);
 
     try {
-      const response = await axios.get(Routes.AUTH, {
+      const response = await axios.get(Endpoints.AUTH, {
         params: {
           ...data,
           provider: Provider.EMAIL,

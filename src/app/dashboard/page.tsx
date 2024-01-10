@@ -1,3 +1,5 @@
+import { isAuthenticated } from '../../utils/auth';
+
 export default function Dashbaord() {
   return (
     <main className="h-[calc(100vh-165px)] overflow-y-auto">

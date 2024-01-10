@@ -1,6 +1,6 @@
 'use client';
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { Routes, emailRegex } from '@/consts';
+import { Endpoints, Routes, emailRegex } from '@/consts';
 import z from 'zod';
 import { signupSchema } from '@/schema/auth';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -26,7 +26,7 @@ const SignupForm = () => {
 
     try {
       const response = await axios.post(
-        Routes.AUTH,
+        Endpoints.AUTH,
         JSON.stringify({ ...data, provider: data.provider || Provider.EMAIL }),
         {
           headers: {
