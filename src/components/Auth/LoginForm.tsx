@@ -42,7 +42,7 @@ const LoginForm = () => {
         throw new Error('Invalid credentials');
       }
 
-      router.push(Routes.DASHBOARD);
+      router.replace(Routes.DASHBOARD, { scroll: true });
     } catch (error) {
       console.error('Error in login: ', error);
     }

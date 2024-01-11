@@ -63,6 +63,18 @@ export async function GET(request: NextRequest) {
     }
     if (user.lastLogin.getTime() < subMinutes(new Date(), 7).getTime()) {
     }
+
+    const newLastLogin = new Date();
+
+    await prisma.user.update({
+      where: {
+        id: user.id,
+      },
+      data: {
+        lastLogin: newLastLogin,
+      },
+    });
+    cookies().set('lastLogin', newLastLogin.toISOString());
     // return the user
     const { passwordHash, ...userData } = user;
 

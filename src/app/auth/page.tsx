@@ -1,14 +1,15 @@
 import dynamic from 'next/dynamic';
-import React from 'react';
+import { isAuthenticated } from '../../utils/auth';
 
 const AuthForm = dynamic(() => import('@/components/Auth/AuthForm'), {
   ssr: false,
 });
 
 export default function Auth() {
+  const isLoggedIn = isAuthenticated();
   return (
     <section className="bg-indigo-600 h-screen flex">
-      <AuthForm />
+      <AuthForm isLoggedIn={isLoggedIn} />
     </section>
   );
 }

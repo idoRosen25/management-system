@@ -3,10 +3,19 @@ import { useState } from 'react';
 import Divider from '../Divider';
 import LoginForm from './LoginForm';
 import SignupForm from './SignupForm';
+import { useRouter } from 'next/navigation';
+import { Routes } from '../../consts';
 
-const AuthForm = () => {
-  const [isLogin, setIsLogin] = useState(false);
+type Props = {
+  isLoggedIn: boolean;
+};
+const AuthForm = ({ isLoggedIn }: Props) => {
+  const router = useRouter();
 
+  if (isLoggedIn) {
+    router.replace(Routes.DASHBOARD, { scroll: true });
+  }
+  const [isLogin, setIsLogin] = useState(true);
   return (
     <div className="bg-white border border-gray-500 w-[25rem] m-auto p-6 rounded-lg shdow-sm">
       {isLogin ? <LoginForm /> : <SignupForm />}
