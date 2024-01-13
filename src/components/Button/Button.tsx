@@ -1,5 +1,6 @@
+'use client';
 import { twJoin, twMerge } from 'tailwind-merge';
-import { Spinner } from './Spinner';
+import { Spinner } from '../Spinner';
 
 type ButtonProps = {
   className?: string;

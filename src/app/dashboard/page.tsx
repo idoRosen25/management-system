@@ -2,7 +2,7 @@ import { isAuthenticated } from '../../utils/auth';
 
 export default function Dashbaord() {
   return (
-    <main className="h-[calc(100vh-165px)] overflow-y-auto">
+    <section>
       {/* Replace with your content */}
       <div className="bg-white py-6">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -14,6 +14,6 @@ export default function Dashbaord() {
         </div>
       </div>
       {/* /End replace */}
-    </main>
+    </section>
   );
 }

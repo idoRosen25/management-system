@@ -1,25 +1,14 @@
+import Button from './Button/Button';
+import CreateTaskButton from './Button/CreateTaskButton';
+
 export default function Header() {
   return (
-    <header className="bg-white">
-      <nav
-        className="mx-auto flex max-w-7xl items-center justify-between p-6 lg:px-8"
-        aria-label="Global"
-      >
-        <div className="flex lg:flex-1">
-          <a href="#" className="-m-1.5 p-1.5">
-            <span className="sr-only">Your Company</span>
-            <img
-              className="h-8 w-auto"
-              src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
-              alt="tailwind marker"
-            />
-          </a>
-        </div>
-      </nav>
-      {/* <div className="hidden lg:block" role="dialog" aria-modal="true">
-        <div className="inset-0"></div>
-        <div className="inset-y-0 left-0 w-full overflow-y-auto bg-white px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10"></div>
-      </div> */}
-    </header>
+    <nav
+      className="mx-auto flex max-w-7xl items-center justify-between p-6 lg:px-8 bg-blue-400 h-[80px]"
+      aria-label="Global"
+    >
+      <div className="flex lg:flex-1"></div>
+      <CreateTaskButton className="justify-self-end" />
+    </nav>
   );
 }
