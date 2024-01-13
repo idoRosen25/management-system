@@ -30,9 +30,10 @@ const CreateTaskModal: React.FC<Props> = ({ show, onClose }) => {
       <BaseForm title="Create Task" onCancel={onClose} btnSize="md">
         {/* TODO: refactor inputs for task creation fields fields */}
         <FormInput
-          title="Owner"
+          title="Assignee"
           type="text"
-          placeholder="Email"
+          inputClassName={'mb-2'}
+          placeholder="Assignee"
           isInline={false}
           errorMessage={errors.email?.message}
           {...register('email', {
@@ -46,16 +47,18 @@ const CreateTaskModal: React.FC<Props> = ({ show, onClose }) => {
         <FormInput
           title="Description"
           type="text"
+          inputClassName={'mb-2'}
           placeholder="Description"
           isInline={false}
-          errorMessage={errors.taskName?.message}
-          {...register('taskName', {
-            required: 'Task Name is required',
+          errorMessage={errors.description?.message}
+          {...register('description', {
+            required: 'Description Name is required',
           })}
         />
         <FormInput
           title="Due Date"
           type="date"
+          inputClassName={'mb-2'}
           placeholder="Due Date"
           isInline={false}
           errorMessage={errors.dueDate?.message}

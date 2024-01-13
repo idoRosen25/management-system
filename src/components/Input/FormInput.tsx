@@ -36,7 +36,7 @@ const FormInput = (
           className={twMerge(
             inputClassName,
             !isInline ? 'w-[90%]' : '',
-            'border border-gray-400 rounded-md pl-2 mb-2',
+            'border border-gray-400 rounded-md pl-2',
           )}
           type={type}
           {...props}
