@@ -35,7 +35,6 @@ const CreateTaskModal: React.FC<Props> = ({ show, onClose }) => {
         onCancel={onClose}
         btnSize="md"
         submitText="Create"
-        onSubmit={handleSubmit(onSubmit)}
         disabled={!isValid && isDirty}
         isSubmitting={isSubmitting}
       >
