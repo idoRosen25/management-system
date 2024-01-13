@@ -64,6 +64,11 @@ const CreateTaskModal: React.FC<Props> = ({ show, onClose }) => {
           errorMessage={errors.dueDate?.message}
           {...register('dueDate', {
             required: 'Due Date is required',
+            validate: (value) => {
+              const today = new Date();
+              const dueDate = new Date(value);
+              return dueDate > today || 'Due Date must be in the future';
+            },
           })}
         />
       </BaseForm>
