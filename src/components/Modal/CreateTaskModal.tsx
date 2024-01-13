@@ -1,6 +1,6 @@
 import ModalWrapper from './ModalWrapper';
 import BaseForm from '../BaseForm';
-import { useForm } from 'react-hook-form';
+import { useForm, SubmitHandler } from 'react-hook-form';
 import FormInput from '../Input/FormInput';
 import { emailRegex } from '../../consts';
 
@@ -8,12 +8,23 @@ type Props = {
   show: boolean;
   onClose: () => void;
 };
+
 const CreateTaskModal: React.FC<Props> = ({ show, onClose }) => {
   const {
     handleSubmit,
     register,
     formState: { errors, isValid, isDirty },
   } = useForm();
+
+  const onSubmit: SubmitHandler<FormData> = async (data) => {
+    if (!isValid) return;
+
+    try {
+    } catch (error) {
+      console.error('Error in create task: ', error);
+    }
+  };
+
   return (
     <ModalWrapper show={show} onBackdrop={onClose}>
       <BaseForm title="Create Task" onCancel={onClose} btnSize="md">
