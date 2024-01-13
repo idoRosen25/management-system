@@ -47,7 +47,7 @@ const CreateTaskModal: React.FC<Props> = ({ show, onClose }) => {
         <FormInput
           title="Description"
           type="text"
-          inputClassName={'mb-2'}
+          inputClassName={'mb-2 h-20'}
           placeholder="Description"
           isInline={false}
           errorMessage={errors.description?.message}
