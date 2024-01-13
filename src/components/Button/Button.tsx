@@ -1,6 +1,7 @@
 'use client';
 import { twJoin, twMerge } from 'tailwind-merge';
 import { Spinner } from '../Spinner';
+import { ButtonColor, ButtonSize, ButtonVariant } from '@/types';
 
 type ButtonProps = {
   className?: string;
@@ -12,10 +13,6 @@ type ButtonProps = {
   size?: ButtonSize;
   isLoading?: boolean;
 };
-
-type ButtonSize = 'xs' | 'sm' | 'md' | 'lg' | 'xl';
-type ButtonColor = 'primary' | 'danger' | 'secondary' | 'white';
-type ButtonVariant = 'contain' | 'outline' | 'text';
 
 const getButtonTheme = ({
   variant,

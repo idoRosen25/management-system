@@ -7,6 +7,7 @@ type Props = {
   inputClassName?: string;
   containerClassName?: string;
   errorMessage?: string;
+  isInline?: boolean;
   [key: string]: unknown;
 };
 const FormInput = (
@@ -16,18 +17,25 @@ const FormInput = (
     containerClassName = '',
     inputClassName = '',
     errorMessage,
+    isInline = true,
     ...props
   }: Props,
   ref: React.ForwardedRef<HTMLInputElement>,
 ) => {
   return (
     <div className="flex flex-col">
-      <div className="flex justify-between">
+      <div
+        className={twMerge(
+          'flex px-2',
+          isInline ? 'justify-between' : 'flex-col gap-2',
+        )}
+      >
         <label className="text-md font-medium mr-2">{title}:</label>
         <input
           ref={ref}
           className={twMerge(
             inputClassName,
+            !isInline ? 'w-[90%]' : '',
             'border border-gray-400 rounded-md pl-2',
           )}
           type={type}

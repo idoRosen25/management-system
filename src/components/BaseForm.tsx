@@ -1,29 +1,36 @@
+import { ButtonSize } from '../types';
 import Button from './Button/Button';
 import Divider from './Divider';
 
 type Props = {
   children: React.ReactNode;
   title?: string;
-  onSubmit: () => void;
+  onSubmit?: () => void;
   onCancel?: () => void;
   disabled?: boolean;
   submitText?: string;
   isSubmitting?: boolean;
+  btnSize?: ButtonSize;
 };
 const BaseForm = ({
   children,
-  title,
+  title = '',
   onSubmit,
   onCancel,
   submitText = 'Submit',
   disabled = false,
   isSubmitting = false,
+  btnSize = 'sm',
 }: Props) => {
   return (
-    <>
-      <h1 className="text-3xl font-normal text-gray-800 mb-2">{title}</h1>
-      <Divider />
-      {children}
+    <div className="flex flex-col h-full">
+      {title && (
+        <>
+          <h1 className="text-3xl font-normal text-gray-800 mb-2">{title}</h1>
+          <Divider />
+        </>
+      )}
+      <div className="h-full my-4">{children}</div>
       <div className="flex gap-4 w-full  h-fit mt-4 justify-end">
         {typeof onCancel === 'function' && (
           <Button
@@ -31,20 +38,22 @@ const BaseForm = ({
             variant="outline"
             onClick={() => onCancel()}
             text="Cancel"
-            size="sm"
+            size={btnSize}
           />
         )}
-        <Button
-          size="sm"
-          color="primary"
-          variant="contain"
-          onClick={() => onSubmit()}
-          disabled={disabled}
-          text={submitText}
-          isLoading={isSubmitting}
-        />
+        {typeof onSubmit === 'function' && (
+          <Button
+            size={btnSize}
+            color="primary"
+            variant="contain"
+            onClick={() => onSubmit()}
+            disabled={disabled}
+            text={submitText}
+            isLoading={isSubmitting}
+          />
+        )}
       </div>
-    </>
+    </div>
   );
 };
 

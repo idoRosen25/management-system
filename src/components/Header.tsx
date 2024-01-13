@@ -1,5 +1,4 @@
-import Button from './Button/Button';
-import CreateTaskButton from './Button/CreateTaskButton';
+import CreateTaskButton from '@/components/Button/CreateTaskButton';
 
 export default function Header() {
   return (
