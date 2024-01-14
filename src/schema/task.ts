@@ -9,5 +9,8 @@ export const createTaskSchema = z.object({
     .max(4000),
   status: z.nativeEnum(TaskStatus).optional(),
   userEmail: z.string({ required_error: 'Email cannot be empty' }).email(),
-  dueDate: z.date().optional(),
+  dueDate: z
+    .date()
+    .min(new Date(), { message: 'Due date cannot be in the past' })
+    .optional(),
 });

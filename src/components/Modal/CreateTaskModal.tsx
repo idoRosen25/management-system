@@ -29,6 +29,7 @@ const CreateTaskModal: React.FC<Props> = ({ show, onClose }) => {
 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const onSubmit: SubmitHandler<FormData> = async (data) => {
+    console.log('data: ', data);
     if (!isValid) return;
     setIsSubmitting(true);
 
@@ -100,7 +101,7 @@ const CreateTaskModal: React.FC<Props> = ({ show, onClose }) => {
               className="border border-gray-400 rounded-md pl-2 w-[90%]"
               placeholder="Description"
               {...register('description', {
-                required: 'Description Name is required',
+                required: 'Description is required',
               })}
             />
           }
@@ -114,12 +115,7 @@ const CreateTaskModal: React.FC<Props> = ({ show, onClose }) => {
           errorMessage={errors.dueDate?.message}
           {...register('dueDate', {
             required: 'Due Date is required',
-            validate: (value) => {
-              if (!value) return true;
-              const today = new Date();
-              const dueDate = new Date(value);
-              return dueDate > today;
-            },
+            valueAsDate: true,
           })}
         />
       </BaseForm>
