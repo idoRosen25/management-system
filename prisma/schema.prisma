@@ -56,7 +56,7 @@ model Task{
   createdAt   DateTime @default(now()) @map("created_at")
   updatedAt   DateTime @updatedAt @map("updated_at")
   creatorEmail   String   @map("creator_email")
-  creator     User     @relation(fields: [creatorEmail], references: [id])
+  creator     User     @relation(fields: [creatorEmail], references: [email])
   assignees   AssignedTask[]
 
   @@index([creatorEmail])

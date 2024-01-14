@@ -4,6 +4,7 @@ import prisma from '../../../../lib/prismadb';
 export async function POST(request: NextRequest) {
   try {
     const { title, description, creatorEmail } = await request.json();
+    console.log(title, description, creatorEmail);
     const task = await prisma.task.create({
       data: {
         title,
