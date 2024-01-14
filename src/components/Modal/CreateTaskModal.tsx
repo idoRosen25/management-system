@@ -29,19 +29,19 @@ const CreateTaskModal: React.FC<Props> = ({ show, onClose }) => {
 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const onSubmit: SubmitHandler<FormData> = async (data) => {
-    console.log('data: ', data);
     if (!isValid) return;
     setIsSubmitting(true);
 
     try {
-      const response = await axios.post(Endpoints.TASKS, {
-        params: {
-          ...data,
+      const response = await axios.post(
+        Endpoints.TASKS,
+        JSON.stringify({ ...data }),
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
         },
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      });
+      );
       if (!response.data) {
         throw new Error('Invalid credentials');
       }
@@ -81,8 +81,8 @@ const CreateTaskModal: React.FC<Props> = ({ show, onClose }) => {
           inputClassName={'mb-2'}
           placeholder="Assignee email"
           isInline={false}
-          errorMessage={errors.userEmail?.message}
-          {...register('userEmail', {
+          errorMessage={errors.creatorEmail?.message}
+          {...register('creatorEmail', {
             required: 'Email is required',
             pattern: {
               value: emailRegex,
