@@ -18,6 +18,7 @@ type Props = {
 
 type FormData = z.infer<typeof createTaskSchema>;
 const CreateTaskModal: React.FC<Props> = ({ show, onClose }) => {
+  const router = useRouter();
   const {
     handleSubmit,
     register,
@@ -26,7 +27,6 @@ const CreateTaskModal: React.FC<Props> = ({ show, onClose }) => {
     resolver: zodResolver(createTaskSchema),
   });
 
-  const router = useRouter();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const onSubmit: SubmitHandler<FormData> = async (data) => {
     if (!isValid) return;
@@ -49,6 +49,7 @@ const CreateTaskModal: React.FC<Props> = ({ show, onClose }) => {
     } catch (error) {
       console.error('Error in create task: ', error);
     }
+    setTimeout(() => setIsSubmitting(false), 500);
   };
 
   return (
@@ -92,12 +93,17 @@ const CreateTaskModal: React.FC<Props> = ({ show, onClose }) => {
           title="Description"
           type="text"
           inputClassName={'mb-2 h-20'}
-          placeholder="Description"
           isInline={false}
           errorMessage={errors.description?.message}
-          {...register('description', {
-            required: 'Description Name is required',
-          })}
+          customInput={
+            <textarea
+              className="border border-gray-400 rounded-md pl-2 w-[90%]"
+              placeholder="Description"
+              {...register('description', {
+                required: 'Description Name is required',
+              })}
+            />
+          }
         />
         <FormInput
           title="Due Date"
@@ -112,7 +118,7 @@ const CreateTaskModal: React.FC<Props> = ({ show, onClose }) => {
               if (!value) return true;
               const today = new Date();
               const dueDate = new Date(value);
-              return dueDate > today || 'Due Date must be in the future';
+              return dueDate > today;
             },
           })}
         />
