@@ -39,13 +39,13 @@ model AssignedTask{
   id          String   @id() @default(uuid())
   taskId      String   @map("task_id") @unique
   task        Task     @relation(fields: [taskId], references: [id])
-  assigneeId  String   @map("assignee_id")
-  assignee    User     @relation(fields: [assigneeId], references: [id])
+  assigneeEmail  String   @map("assignee_email")
+  assignee    User     @relation(fields: [assigneeEmail], references: [email])
   createdAt   DateTime @default(now()) @map("created_at")
   updatedAt   DateTime @updatedAt @map("updated_at")
 
 
-  @@unique([taskId, assigneeId])
+  @@unique([taskId, assigneeEmail])
 }
 
 model Task{

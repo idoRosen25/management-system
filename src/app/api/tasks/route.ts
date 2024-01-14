@@ -10,6 +10,11 @@ export async function POST(request: NextRequest) {
         title,
         description,
         creatorEmail,
+        assignees: {
+          create: {
+            assigneeEmail: creatorEmail,
+          },
+        },
       },
     });
     return NextResponse.json(task);
