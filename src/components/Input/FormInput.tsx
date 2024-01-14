@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ReactNode } from 'react';
 import { twMerge } from 'tailwind-merge';
 
 type Props = {
@@ -8,6 +8,7 @@ type Props = {
   containerClassName?: string;
   errorMessage?: string;
   isInline?: boolean;
+  customInput?: ReactNode;
   [key: string]: unknown;
 };
 const FormInput = (
@@ -18,6 +19,7 @@ const FormInput = (
     inputClassName = '',
     errorMessage,
     isInline = true,
+    customInput,
     ...props
   }: Props,
   ref: React.ForwardedRef<HTMLInputElement>,
@@ -31,16 +33,20 @@ const FormInput = (
         )}
       >
         <label className="text-md font-medium mr-2">{title}:</label>
-        <input
-          ref={ref}
-          className={twMerge(
-            inputClassName,
-            !isInline ? 'w-[90%]' : '',
-            'border border-gray-400 rounded-md pl-2',
-          )}
-          type={type}
-          {...props}
-        />
+        {customInput ? (
+          customInput
+        ) : (
+          <input
+            ref={ref}
+            className={twMerge(
+              inputClassName,
+              !isInline ? 'w-[90%]' : '',
+              'border border-gray-400 rounded-md pl-2',
+            )}
+            type={type}
+            {...props}
+          />
+        )}
       </div>
       {!!errorMessage && <span className="text-red-500">{errorMessage}</span>}
     </div>
