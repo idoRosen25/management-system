@@ -7,4 +7,6 @@ export enum Routes {
 
 export enum Endpoints {
   AUTH = '/auth',
+  TASKS = '/tasks',
+  USERS = '/users',
 }

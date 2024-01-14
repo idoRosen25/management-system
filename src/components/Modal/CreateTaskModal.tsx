@@ -4,25 +4,48 @@ import { useForm, SubmitHandler } from 'react-hook-form';
 import { useState } from 'react';
 import FormInput from '../Input/FormInput';
 import { emailRegex } from '../../consts';
+import { createTaskSchema } from '@/schema/task';
+import z from 'zod';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { axios } from '../../utils/axios';
+import { Endpoints, Routes } from '@/consts';
+import { useRouter } from 'next/navigation';
 
 type Props = {
   show: boolean;
   onClose: () => void;
 };
 
+type FormData = z.infer<typeof createTaskSchema>;
 const CreateTaskModal: React.FC<Props> = ({ show, onClose }) => {
   const {
     handleSubmit,
     register,
     formState: { errors, isValid, isDirty },
-  } = useForm();
+  } = useForm<FormData>({
+    resolver: zodResolver(createTaskSchema),
+  });
 
+  const router = useRouter();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const onSubmit: SubmitHandler<FormData> = async (data) => {
     if (!isValid) return;
     setIsSubmitting(true);
 
     try {
+      const response = await axios.post(Endpoints.TASKS, {
+        params: {
+          ...data,
+        },
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+      if (!response.data) {
+        throw new Error('Invalid credentials');
+      }
+
+      router.replace(Routes.DASHBOARD, { scroll: true });
     } catch (error) {
       console.error('Error in create task: ', error);
     }
@@ -35,19 +58,29 @@ const CreateTaskModal: React.FC<Props> = ({ show, onClose }) => {
         onCancel={onClose}
         btnSize="md"
         submitText="Create"
-        onSubmit={() => null}
+        onSubmit={handleSubmit(onSubmit)}
         disabled={!isValid && isDirty}
         isSubmitting={isSubmitting}
       >
-        {/* TODO: refactor inputs for task creation fields fields */}
+        <FormInput
+          title="Title"
+          type="text"
+          inputClassName={'mb-2'}
+          placeholder="Title"
+          isInline={false}
+          errorMessage={errors.title?.message}
+          {...register('title', {
+            required: 'Title is required',
+          })}
+        />
         <FormInput
           title="Assignee"
           type="text"
           inputClassName={'mb-2'}
           placeholder="Assignee email"
           isInline={false}
-          errorMessage={errors.email?.message}
-          {...register('email', {
+          errorMessage={errors.userEmail?.message}
+          {...register('userEmail', {
             required: 'Email is required',
             pattern: {
               value: emailRegex,
@@ -76,6 +109,7 @@ const CreateTaskModal: React.FC<Props> = ({ show, onClose }) => {
           {...register('dueDate', {
             required: 'Due Date is required',
             validate: (value) => {
+              if (!value) return true;
               const today = new Date();
               const dueDate = new Date(value);
               return dueDate > today || 'Due Date must be in the future';

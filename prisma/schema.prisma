@@ -14,6 +14,12 @@ enum Provider {
   EMAIL
 }
 
+enum TaskStatus {
+  PENDING
+  IN_PROGRESS
+  DONE
+}
+
 model User {
   id           String   @id() @default(uuid())
   fullName     String   @db.VarChar(1024)
@@ -23,6 +29,35 @@ model User {
   updatedAt    DateTime @updatedAt @map("updated_at")
   lastLogin    DateTime @map("last_login")
   provider     Provider
+  tasks        Task[]
+  assignedTasks AssignedTask[]
 
   @@index([email])
+}
+
+model AssignedTask{
+  id          String   @id() @default(uuid())
+  taskId      String   @map("task_id") @unique
+  task        Task     @relation(fields: [taskId], references: [id])
+  assigneeId  String   @map("assignee_id")
+  assignee    User     @relation(fields: [assigneeId], references: [id])
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+
+
+  @@unique([taskId, assigneeId])
+}
+
+model Task{
+  id          String   @id() @default(uuid())
+  title       String   @db.VarChar(1024)
+  description String   @db.VarChar(4096)
+  status      TaskStatus   @default(PENDING)
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+  creatorEmail   String   @map("creator_email")
+  creator     User     @relation(fields: [creatorEmail], references: [id])
+  assignees   AssignedTask[]
+
+  @@index([creatorEmail])
 }
