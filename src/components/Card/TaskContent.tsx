@@ -31,7 +31,7 @@ const TaskContent: React.FC<TaskContentProps> = ({ contentItems }) => (
       "flex flex-row justify-between px-4 py-4 sm:px-6"
     }>
     <Button text="Edit" variant="outline" color="primary" onClick={null} />
-    <Button text="Delete" variant="outline" color="primary" onClick={null} />
+    <Button text="Delete" variant="outline" color="danger" onClick={null} />
     </div>
   </div>
 );
