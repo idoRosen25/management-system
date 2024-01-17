@@ -1,6 +1,6 @@
 import React from 'react';
-import TaskHeader from '../TaskHeader';
-import TaskContent from '../TaskContent';
+import TaskHeader from './TaskHeader';
+import TaskContent from './TaskContent';
 
 type CardProps = {
   title: string;
