@@ -10,6 +10,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { axios } from '../../utils/axios';
 import { Endpoints } from '@/consts';
 import { twMerge } from 'tailwind-merge';
+import { useRouter } from 'next/navigation';
 
 type Props = {
   show: boolean;
@@ -18,6 +19,7 @@ type Props = {
 
 type FormData = z.infer<typeof createTaskSchema>;
 const CreateTaskModal: React.FC<Props> = ({ show, onClose }) => {
+  const router = useRouter();
   const {
     handleSubmit,
     register,
@@ -52,6 +54,7 @@ const CreateTaskModal: React.FC<Props> = ({ show, onClose }) => {
       }
 
       handleClose();
+      router.reload();
     } catch (error) {
       console.error('Error in create task: ', error);
     }
