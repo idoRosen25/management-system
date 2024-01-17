@@ -4,7 +4,6 @@ import { getTasks } from "@/utils/tasks";
 export default async function Dashbaord() {
 
   const tasks = await getTasks();
-  console.log(tasks);
 
   return (
     <section>
