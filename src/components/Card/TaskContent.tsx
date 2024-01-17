@@ -1,4 +1,5 @@
 import React from 'react';
+import Button from '../Button/Button';
 
 type TaskContentItemProps = {
   label: string;
@@ -18,16 +19,21 @@ type TaskContentProps = {
   contentItems: { label: string; value: string }[];
 };
 
-const TaskContent: React.FC<TaskContentProps> = ({ contentItems }) => {
-  return (
-    <div className="border-t border-gray-200">
-      <dl>
-        {contentItems.map((item, index) => (
-          <TaskContentItem key={index} label={item.label} value={item.value} />
-        ))}
-      </dl>
+const TaskContent: React.FC<TaskContentProps> = ({ contentItems }) => (
+  <div className="border-t border-gray-200">
+    <dl>
+      {contentItems.map((item, index) => (
+        <TaskContentItem key={index} label={item.label} value={item.value} />
+      ))}
+    </dl>
+    {/* // add button here */}
+    <div className={
+      "flex flex-row justify-between px-4 py-4 sm:px-6"
+    }>
+    <Button text="Edit" variant="outline" color="primary" onClick={null} />
+    <Button text="Delete" variant="outline" color="primary" onClick={null} />
     </div>
-  );
-};
+  </div>
+);
 
 export default TaskContent;
