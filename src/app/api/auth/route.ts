@@ -27,7 +27,7 @@ export async function POST(request: NextRequest) {
       process.env.NEXT_PUBLIC_JWT_SECRET as string,
       { expiresIn: '7d' },
     );
-    // return the user
+
     cookies().set('access_token', token);
 
     return NextResponse.json(userData);
