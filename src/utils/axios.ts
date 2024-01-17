@@ -1,7 +1,6 @@
 import axios, { AxiosError } from 'axios';
 
-export const API_URL =
-  (process.env.NEXT_API_URL as string) || 'http://localhost:3000/api';
+export const API_URL = process.env.NEXT_PUBLIC_API_URL as string;
 
 const config = {
   baseURL: API_URL,

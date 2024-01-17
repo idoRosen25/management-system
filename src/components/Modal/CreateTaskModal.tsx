@@ -10,6 +10,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { axios } from '../../utils/axios';
 import { Endpoints, Routes } from '@/consts';
 import { useRouter } from 'next/navigation';
+import { twMerge } from 'tailwind-merge';
 
 type Props = {
   show: boolean;
@@ -22,6 +23,7 @@ const CreateTaskModal: React.FC<Props> = ({ show, onClose }) => {
   const {
     handleSubmit,
     register,
+    reset,
     formState: { errors, isValid, isDirty },
   } = useForm<FormData>({
     resolver: zodResolver(createTaskSchema),
@@ -53,11 +55,15 @@ const CreateTaskModal: React.FC<Props> = ({ show, onClose }) => {
     setTimeout(() => setIsSubmitting(false), 500);
   };
 
+  const handleClose = () => {
+    onClose();
+    reset();
+  };
   return (
-    <ModalWrapper show={show} onBackdrop={onClose}>
+    <ModalWrapper show={show} onBackdrop={handleClose}>
       <BaseForm
         title="Create Task"
-        onCancel={onClose}
+        onCancel={handleClose}
         btnSize="md"
         submitText="Create"
         onSubmit={handleSubmit(onSubmit)}
@@ -81,9 +87,8 @@ const CreateTaskModal: React.FC<Props> = ({ show, onClose }) => {
           inputClassName={'mb-2'}
           placeholder="Assignee email"
           isInline={false}
-          errorMessage={errors.creatorEmail?.message}
-          {...register('creatorEmail', {
-            required: 'Email is required',
+          errorMessage={errors.assigneeEmail?.message}
+          {...register('assigneeEmail', {
             pattern: {
               value: emailRegex,
               message: 'Invalid email format',
@@ -98,25 +103,16 @@ const CreateTaskModal: React.FC<Props> = ({ show, onClose }) => {
           errorMessage={errors.description?.message}
           customInput={
             <textarea
-              className="border border-gray-400 rounded-md pl-2 w-[90%]"
+              className={twMerge(
+                'border border-gray-400 rounded-md pl-2 w-[90%]',
+                errors.description?.message ? 'border-2 border-red-600' : '',
+              )}
               placeholder="Description"
               {...register('description', {
                 required: 'Description is required',
               })}
             />
           }
-        />
-        <FormInput
-          title="Due Date"
-          type="date"
-          inputClassName={'mb-2'}
-          placeholder="Due Date"
-          isInline={false}
-          errorMessage={errors.dueDate?.message}
-          {...register('dueDate', {
-            required: 'Due Date is required',
-            valueAsDate: true,
-          })}
         />
       </BaseForm>
     </ModalWrapper>

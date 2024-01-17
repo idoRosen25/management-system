@@ -21,43 +21,45 @@ enum TaskStatus {
 }
 
 model User {
-  id           String   @id() @default(uuid())
-  fullName     String   @db.VarChar(1024)
-  email        String   @unique
-  passwordHash String   @map("password_hash") @db.VarChar(256)
-  createdAt    DateTime @default(now()) @map("created_at")
-  updatedAt    DateTime @updatedAt @map("updated_at")
-  lastLogin    DateTime @map("last_login")
-  provider     Provider
-  tasks        Task[]
+  id            String         @id() @default(uuid())
+  fullName      String         @db.VarChar(1024)
+  email         String         @unique
+  passwordHash  String         @map("password_hash") @db.VarChar(256)
+  createdAt     DateTime       @default(now()) @map("created_at")
+  updatedAt     DateTime       @updatedAt @map("updated_at")
+  lastLogin     DateTime       @map("last_login")
+  provider      Provider
+  tasks         Task[]
   assignedTasks AssignedTask[]
 
   @@index([email])
 }
 
-model AssignedTask{
-  id          String   @id() @default(uuid())
-  taskId      String   @map("task_id") @unique
-  task        Task     @relation(fields: [taskId], references: [id])
-  assigneeEmail  String   @map("assignee_email")
-  assignee    User     @relation(fields: [assigneeEmail], references: [email])
-  createdAt   DateTime @default(now()) @map("created_at")
-  updatedAt   DateTime @updatedAt @map("updated_at")
-
+model AssignedTask {
+  id            String   @id() @default(uuid())
+  taskId        String   @unique @map("task_id")
+  task          Task     @relation(fields: [taskId], references: [id])
+  assigneeEmail String?  @map("assignee_email")
+  assignee      User?    @relation(fields: [assigneeEmail], references: [email])
+  createdAt     DateTime @default(now()) @map("created_at")
+  updatedAt     DateTime @updatedAt @map("updated_at")
 
   @@unique([taskId, assigneeEmail])
+  @@index([taskId])
+  @@index([assigneeEmail])
 }
 
-model Task{
-  id          String   @id() @default(uuid())
-  title       String   @db.VarChar(1024)
-  description String   @db.VarChar(4096)
-  status      TaskStatus   @default(PENDING)
-  createdAt   DateTime @default(now()) @map("created_at")
-  updatedAt   DateTime @updatedAt @map("updated_at")
-  creatorEmail   String   @map("creator_email")
-  creator     User     @relation(fields: [creatorEmail], references: [email])
-  assignees   AssignedTask[]
+model Task {
+  id           String        @id() @default(uuid())
+  title        String        @db.VarChar(1024)
+  description  String        @db.VarChar(4096)
+  status       TaskStatus    @default(PENDING)
+  createdAt    DateTime      @default(now()) @map("created_at")
+  updatedAt    DateTime      @updatedAt @map("updated_at")
+  creatorEmail String        @map("creator_email")
+  creator      User          @relation(fields: [creatorEmail], references: [email])
+  assignedTo   AssignedTask?
 
   @@index([creatorEmail])
+  @@index([status])
 }

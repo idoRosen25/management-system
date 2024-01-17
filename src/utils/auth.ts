@@ -1,13 +1,27 @@
-import { subDays, subMinutes } from 'date-fns';
+import { User } from '@prisma/client';
+import jwt from 'jsonwebtoken';
 import { cookies } from 'next/headers';
 
 export const isAuthenticated = () => {
-  const lastLogin = cookies().get('lastLogin');
+  const accessToken = cookies().get('access_token');
 
-  if (!lastLogin?.value) return false;
+  if (!accessToken?.value) return false;
 
-  if (new Date(lastLogin.value).getTime() < subMinutes(new Date(), 7).getTime())
-    return false;
+  const decodedToken = jwt.decode(accessToken.value);
 
-  return true;
+  if (!decodedToken) return false;
+
+  return (
+    new Date().getTime() > new Date((decodedToken as User).lastLogin).getTime()
+  );
+};
+
+export const getLoggedInUser = () => {
+  if (isAuthenticated()) {
+    const accessToken = cookies().get('access_token');
+    if (!accessToken?.value) return null;
+    const decodedToken = jwt.decode(accessToken.value);
+    return decodedToken as User;
+  }
+  return null;
 };

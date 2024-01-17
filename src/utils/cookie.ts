@@ -1,12 +1,11 @@
-export function getCookie(name: RegExpMatchArray | null) {
-  return (
-    (name = (document.cookie + ';').match(new RegExp(name + '=.*;'))) &&
-    name[0].split(/=|;/)[1]
-  );
+import { cookies } from 'next/headers';
+
+export function getCookie(name: string) {
+  return cookies().get(name);
 }
 
 export function deleteCookie(name: string) {
-  document.cookie = `${name}=; path=/; expires=${new Date(0).toUTCString()}`;
+  cookies().delete(name);
 }
 
 export function setCookie(name: string, value: string | number, days?: number) {
@@ -14,6 +13,5 @@ export function setCookie(name: string, value: string | number, days?: number) {
 
   const e = new Date();
   e.setDate(e.getDate() + (days || 365));
-  document.cookie =
-    name + '=' + value + ';expires=' + e.toUTCString() + ';path=/';
+  cookies().set(name, `${value}`, { expires: e.getTime() });
 }

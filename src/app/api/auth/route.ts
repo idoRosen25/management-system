@@ -3,6 +3,7 @@ import bcrypt from 'bcrypt';
 import { subMinutes } from 'date-fns';
 import { NextRequest, NextResponse } from 'next/server';
 import { cookies } from 'next/headers';
+import jwt from 'jsonwebtoken';
 
 export async function POST(request: NextRequest) {
   try {
@@ -18,9 +19,18 @@ export async function POST(request: NextRequest) {
         lastLogin: new Date(),
       },
     });
+
+    const { passwordHash: _password, ...userData } = user;
+
+    const token = jwt.sign(
+      userData,
+      process.env.NEXT_PUBLIC_JWT_SECRET as string,
+      { expiresIn: '7d' },
+    );
     // return the user
-    cookies().set('lastLogin', user.lastLogin.toISOString());
-    return NextResponse.json(user);
+    cookies().set('access_token', token);
+
+    return NextResponse.json(userData);
   } catch (error) {
     console.error(error);
     return NextResponse.error();
@@ -61,8 +71,6 @@ export async function GET(request: NextRequest) {
     if (!compare) {
       throw new Error('Invalid credentials');
     }
-    if (user.lastLogin.getTime() < subMinutes(new Date(), 7).getTime()) {
-    }
 
     const newLastLogin = new Date();
 
@@ -74,9 +82,18 @@ export async function GET(request: NextRequest) {
         lastLogin: newLastLogin,
       },
     });
-    cookies().set('lastLogin', newLastLogin.toISOString());
+
     // return the user
     const { passwordHash, ...userData } = user;
+
+    console.log('in login : ', process.env.NEXT_PUBLIC_JWT_SECRET);
+    const token = jwt.sign(
+      userData,
+      process.env.NEXT_PUBLIC_JWT_SECRET as string,
+      { expiresIn: '7d' },
+    );
+    // return the user
+    cookies().set('access_token', token);
 
     return NextResponse.json(userData, {
       status: 200,

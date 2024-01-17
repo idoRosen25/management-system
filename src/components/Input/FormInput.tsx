@@ -25,29 +25,29 @@ const FormInput = (
   ref: React.ForwardedRef<HTMLInputElement>,
 ) => {
   return (
-    <div className="flex flex-col">
-      <div
-        className={twMerge(
-          'flex px-2',
-          isInline ? 'justify-between' : 'flex-col gap-2',
-        )}
-      >
-        <label className="text-md font-medium mr-2">{title}:</label>
-        {customInput ? (
-          customInput
-        ) : (
-          <input
-            ref={ref}
-            className={twMerge(
-              inputClassName,
-              !isInline ? 'w-[90%]' : '',
-              'border border-gray-400 rounded-md pl-2',
-            )}
-            type={type}
-            {...props}
-          />
-        )}
-      </div>
+    <div
+      className={twMerge(
+        'flex px-2 mb-4',
+        isInline ? 'justify-between' : 'flex-col',
+      )}
+    >
+      <label className="text-md font-medium mr-2 mb-1">{title}:</label>
+      {customInput ? (
+        customInput
+      ) : (
+        <input
+          ref={ref}
+          multiple
+          className={twMerge(
+            inputClassName,
+            !isInline ? 'w-[90%]' : '',
+            'border border-gray-400 rounded-md pl-2',
+            errorMessage ? 'border-2 border-red-600' : '',
+          )}
+          type={type}
+          {...props}
+        />
+      )}
       {!!errorMessage && <span className="text-red-500">{errorMessage}</span>}
     </div>
   );
