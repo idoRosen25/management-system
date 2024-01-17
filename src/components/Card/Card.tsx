@@ -5,24 +5,14 @@ import TaskContent from './TaskContent';
 type CardProps = {
   title: string;
   description: string;
-  status: string;
-  creator: string;
-  assignee: string;
-  createdAt: string;
+  contentItems: { label: string; value: string }[];
 };
 
-const Card: React.FC<CardProps> = ({
-  title,
-  description,
-  status,
-  creator,
-  assignee,
-  createdAt,
-}) => {
+const Card: React.FC<CardProps> = ({ title, description, contentItems }) => {
   return (
     <div className="bg-white shadow overflow-hidden sm:rounded-lg">
       <TaskHeader title={title} description={description} />
-      <TaskContent status={status} creator={creator} assignee={assignee} createdAt={createdAt} />
+      <TaskContent contentItems={contentItems} />
     </div>
   );
 };

@@ -1,15 +1,11 @@
 import React from 'react';
 
-type TaskContentProps = {
-  label?: string;
-  value?: string;
-  status?: string;
-  creator?: string;
-  assignee?: string;
-  createdAt?: string;
+type TaskContentItemProps = {
+  label: string;
+  value: string;
 };
 
-const TaskContentItem: React.FC<TaskContentProps> = ({ label, value }) => {
+const TaskContentItem: React.FC<TaskContentItemProps> = ({ label, value }) => {
   return (
     <div className="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
       <dt className="text-sm font-medium text-gray-500">{label}</dt>
@@ -18,14 +14,17 @@ const TaskContentItem: React.FC<TaskContentProps> = ({ label, value }) => {
   );
 };
 
-const TaskContent: React.FC<TaskContentProps> = ({ status, creator, assignee, createdAt }) => {
+type TaskContentProps = {
+  contentItems: { label: string; value: string }[];
+};
+
+const TaskContent: React.FC<TaskContentProps> = ({ contentItems }) => {
   return (
     <div className="border-t border-gray-200">
       <dl>
-        <TaskContentItem label="Status" value={status} />
-        <TaskContentItem label="Creator" value={creator} />
-        <TaskContentItem label="Assignee" value={assignee} />
-        <TaskContentItem label="Created At" value={createdAt} />
+        {contentItems.map((item, index) => (
+          <TaskContentItem key={index} label={item.label} value={item.value} />
+        ))}
       </dl>
     </div>
   );

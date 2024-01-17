@@ -14,16 +14,12 @@ export default async function Dashbaord() {
           <div className="py-4">
             <div className="border-4 border-dashed border-gray-200 rounded-lg h-96">
               <div className="grid grid-cols-3 gap-4">
-                {tasks.map((task) => (
-                  <Card
-                    key={task.id}
-                    title={task.title}
-                    description={task.description}
-                    status={task.status}
-                    creator={task.creatorEmail}
-                    assignee={task.assignedTo?.fullName ?? ''}
-                    createdAt={task.createdAt.toDateString()}
-                  />
+                {tasks.map((task, index) => (
+                  <Card key={index} title={task.title} description={task.description} contentItems={[
+                    { label: 'Status', value: task.status },
+                    { label: 'Created at', value: task.createdAt.toDateString() },
+                    { label: 'Assigned to', value: task.assignedTo?.fullName?.toString() ?? '' },
+                  ]} />
                 ))}
               </div>
             </div>
