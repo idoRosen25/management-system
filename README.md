@@ -20,6 +20,40 @@ You can start editing the page by modifying `app/page.tsx`. The page auto-update
 
 This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
 
+## Setup local env
+
+create a file `env.local` in the root folder and copy the following content
+
+```
+NX_DAEMON=""
+POSTGRES_DATABASE="postgres"
+POSTGRES_HOST="localhost:5432"
+POSTGRES_PASSWORD="postgres"
+DATABASE_URL="postgres://postgres:postgres@localhost:5432/postgres?pgbouncer=true&connect_timeout=15"
+POSTGRES_URL="postgres://postgres:postgres@localhost:5432/postgres"
+POSTGRES_URL_NON_POOLING="postgres://postgres:postgres@localhost:5432/postgres"
+POSTGRES_USER="postgres"
+TURBO_REMOTE_ONLY=""
+TURBO_RUN_SUMMARY=""
+VERCEL="1"
+VERCEL_ENV="development"
+VERCEL_GIT_COMMIT_AUTHOR_LOGIN=""
+VERCEL_GIT_COMMIT_AUTHOR_NAME=""
+VERCEL_GIT_COMMIT_MESSAGE=""
+VERCEL_GIT_COMMIT_REF=""
+VERCEL_GIT_COMMIT_SHA=""
+VERCEL_GIT_PREVIOUS_SHA=""
+VERCEL_GIT_PROVIDER=""
+VERCEL_GIT_PULL_REQUEST_ID=""
+VERCEL_GIT_REPO_ID=""
+VERCEL_GIT_REPO_OWNER=""
+VERCEL_GIT_REPO_SLUG=""
+VERCEL_URL=""
+
+NEXT_PUBLIC_API_URL="http://localhost:3000/api"
+NEXT_PUBLIC_JWT_SECRET="secret"
+```
+
 ## Learn More
 
 To learn more about Next.js, take a look at the following resources:
