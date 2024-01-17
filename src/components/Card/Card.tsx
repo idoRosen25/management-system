@@ -1,18 +1,19 @@
 import React from 'react';
-import TaskHeader from './TaskHeader';
-import TaskContent from './TaskContent';
+import CardHeader from './CardHeader';
+import CardContent from './CardContent';
+import CardFooter from './CardFooter';
 
 type CardProps = {
-  title: string;
-  description: string;
-  contentItems: { label: string; value: string }[];
+  header: { title: string; description: string };
+  content: { contentItems: { label: string; value: string }[] };
 };
 
-const Card: React.FC<CardProps> = ({ title, description, contentItems }) => {
+const Card: React.FC<CardProps> = ({ header, content }) => {
   return (
     <div className="bg-white shadow overflow-hidden sm:rounded-lg">
-      <TaskHeader title={title} description={description} />
-      <TaskContent contentItems={contentItems} />
+      <CardHeader {...header} />
+      <CardContent {...content} />
+      <CardFooter />
     </div>
   );
 };

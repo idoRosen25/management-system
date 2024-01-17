@@ -1,5 +1,5 @@
 import Card from "@/components/Card/Card";
-import { getTasks } from "@/utils/tasks";
+import { getTasks } from "@/utils/tasks"
 
 export default async function Dashbaord() {
 
@@ -12,15 +12,36 @@ export default async function Dashbaord() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* Replace with your content */}
           <div className="py-4">
-            <div className="border-4 border-dashed border-gray-200 rounded-lg h-96">
+            <div className="border-4 border-dashed border-gray-200 rounded-lg h-auto p-5">
               <div className="grid grid-cols-3 gap-4">
-                {tasks.map((task, index) => (
-                  <Card key={index} title={task.title} description={task.description} contentItems={[
-                    { label: 'Status', value: task.status },
-                    { label: 'Created at', value: task.createdAt.toDateString() },
-                    { label: 'Assigned to', value: task.assignedTo?.fullName?.toString() ?? '' },
-                  ]} />
-                ))}
+                {
+                  tasks.map(task => (
+                    <Card 
+                    key={task.id}
+                    header={{ 
+                      title: task.title,
+                      description: task.description
+                    }}
+                    content={{ 
+                      contentItems: 
+                      [
+                        { 
+                        label: "Status",
+                        value: task.status 
+                      },
+                      { 
+                        label: "Assigned To",
+                        value: task.assignedTo?.fullName ?? "Not assigned"
+                      },
+                      { 
+                        label: "Created at",
+                        value: task.createdAt.toString()
+                      },
+                    ] 
+                    }}
+                    />
+                  ))
+                }
               </div>
             </div>
           </div>

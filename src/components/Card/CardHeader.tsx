@@ -1,11 +1,11 @@
 import React from 'react';
 
-type TaskHeaderProps = {
+type CardHeaderProps = {
   title: string;
   description: string;
 };
 
-const TaskHeader: React.FC<TaskHeaderProps> = ({ title, description }) => {
+const CardHeader: React.FC<CardHeaderProps> = ({ title, description }) => {
   return (
     <div className="px-4 py-5 sm:px-6">
       <h3 className="text-lg leading-6 font-medium text-gray-900">{title}</h3>
@@ -14,4 +14,4 @@ const TaskHeader: React.FC<TaskHeaderProps> = ({ title, description }) => {
   );
 };
 
-export default TaskHeader;
+export default CardHeader;
