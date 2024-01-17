@@ -54,7 +54,7 @@ const CreateTaskModal: React.FC<Props> = ({ show, onClose }) => {
       }
 
       handleClose();
-      router.reload();
+      router.refresh();
     } catch (error) {
       console.error('Error in create task: ', error);
     }
