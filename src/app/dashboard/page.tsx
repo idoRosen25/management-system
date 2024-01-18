@@ -16,19 +16,37 @@ export default async function Dashbaord() {
                 {tasks.map((task) => (
                   <Card
                     key={task.id}
-                    title={task.title}
-                    description={task.description}
-                    content={[
-                      { label: 'Status', value: task.status },
-                      {
-                        label: 'Assigned To',
-                        value: task.assignedTo?.fullName ?? 'Not Assigned',
-                      },
-                      {
-                        label: 'Created',
-                        value: task.createdAt.toLocaleString('he'),
-                      },
-                    ]}
+                    header={true}
+                    headerContent={() => (
+                      <div className="flex flex-row justify-between">
+                        <h3 className="text-lg leading-6 font-medium text-gray-900">
+                          {task.title}
+                        </h3>
+                      </div>
+                    )}
+                    main={() => (
+                      <>
+                      <div className='flex-col text-center'>
+                      <div key={task.id} className="sm:col-span-1">
+                      <dt className="text-sm font-medium text-gray-500">Assignee</dt>
+                      <dd className="mt-1 text-sm text-gray-900">{task.assignedTo?.fullName}</dd>
+                      </div>
+                      <div className="sm:col-span-2 mt-2">
+                      <dt className="text-sm font-medium text-gray-500">Description</dt>
+                      <dd className="mt-1 text-sm text-gray-900">{task.description}</dd>
+                      </div>
+                      <div className="sm:col-span-1 mt-2">
+                      <dt className="text-sm font-medium text-gray-500">Status</dt>
+                      <dd className="mt-1 text-sm text-gray-900">{task.status}</dd>
+                      </div>
+                      <div className="sm:col-span-1 mt-2">
+                      <dt className="text-sm font-medium text-gray-500">Created At</dt>
+                      <dd className="mt-1 text-sm text-gray-900">{task.createdAt.toLocaleString("he")}</dd>
+                      </div>
+                      </div>
+                      </>
+
+                    )}
                     footer={true}
                   />
                 ))}

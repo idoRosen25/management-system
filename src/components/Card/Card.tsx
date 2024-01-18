@@ -4,27 +4,26 @@ import CardContent from './CardContent';
 import CardFooter from './CardFooter';
 
 type CardProps = {
-  title: string;
-  description: string;
-  content: { label: string; value: string }[];
-  footer?: boolean;
+  header: boolean;
+  headerContent: () => JSX.Element;
+  main: () => JSX.Element;
+  footer: boolean;
   footerContent?: () => JSX.Element;
 };
 
 const Card = ( 
 {
-  title,
-  description,
-  content,
+  header,
+  headerContent,
+  main,
   footer,
   footerContent,
-  ...props // only for now. not used.
 
 } : CardProps ) => {
   return (
     <div className="bg-white overflow-hidden shadow rounded-lg">
-      <CardHeader title={title} description={description} />
-      <CardContent contentItems={content} />
+      {header ? <CardHeader> {headerContent()} </CardHeader> : null}
+      <CardContent>{main()}</CardContent>
       {footer ? <CardFooter /> : footerContent && footerContent()}
     </div>
   );
