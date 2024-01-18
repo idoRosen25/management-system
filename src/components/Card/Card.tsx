@@ -16,7 +16,7 @@ const Card = (
   description,
   content,
   footer,
-  ...props
+  ...props // only for now. not used.
 
 } : CardProps ) => {
   return (
