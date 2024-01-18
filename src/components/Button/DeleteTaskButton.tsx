@@ -1,3 +1,4 @@
+'use client';
 import Button from "./Button";
 
 const DeleteTaskButton = ({ className = ''}: { className?: string }) => {
@@ -6,7 +7,7 @@ const DeleteTaskButton = ({ className = ''}: { className?: string }) => {
         className={className}
         text={'Delete task'}
         color="danger"
-        onClick={null}
+        onClick={() => console.log('Delete task button clicked')}
         />
     );
 }

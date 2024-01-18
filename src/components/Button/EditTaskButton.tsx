@@ -1,3 +1,4 @@
+"use Client";
 import Button from "./Button"
 
 
@@ -7,7 +8,7 @@ const EditTaskButton = ({ className = ''}: { className?: string }) => {
         className={className}
         text={'Edit task'}
         color="primary"
-        onClick={null}
+        onClick={() => console.log('Edit task button clicked')}
         />
     );
 }

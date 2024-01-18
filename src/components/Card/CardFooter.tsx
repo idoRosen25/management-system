@@ -1,3 +1,4 @@
+'use client';
 import React from 'react';
 import EditTaskButton from '../Button/EditTaskButton';
 import DeleteTaskButton from '../Button/DeleteTaskButton';
