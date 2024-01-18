@@ -4,18 +4,28 @@ import CardContent from './CardContent';
 import CardFooter from './CardFooter';
 
 type CardProps = {
-  header: { title: string; description: string };
-  content: { contentItems: { label: string; value: string }[] };
+  title: string;
+  description: string;
+  content: { label: string; value: string }[];
+  footer?: boolean;
 };
 
-const Card: React.FC<CardProps> = ({ header, content }) => {
+const Card = ( 
+{
+  title,
+  description,
+  content,
+  footer,
+  ...props
+
+} : CardProps ) => {
   return (
-    <div className="bg-white shadow overflow-hidden sm:rounded-lg">
-      <CardHeader {...header} />
-      <CardContent {...content} />
-      <CardFooter />
+    <div className="bg-white overflow-hidden shadow rounded-lg">
+      <CardHeader title={title} description={description} />
+      <CardContent contentItems={content} />
+      {footer && <CardFooter footer={footer} />}
     </div>
   );
-};
+}
 
 export default Card;

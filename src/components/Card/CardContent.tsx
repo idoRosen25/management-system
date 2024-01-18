@@ -4,14 +4,14 @@ type CardContentProps = {
   contentItems: { label: string; value: string }[];
 };
 
-const CardContent: React.FC<CardContentProps> = ({ contentItems }) => {
+const CardContent = ({ contentItems }: CardContentProps) => {
   return (
-    <div className="border-t border-gray-200">
-      <dl>
-        {contentItems.map((item, index) => (
-          <div key={index} className="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+    <div className="px-4 py-5 sm:p-6">
+      <dl className="grid grid-cols-1 gap-x-4 gap-y-8 sm:grid-cols-2">
+        {contentItems.map((item) => (
+          <div key={item.label} className="sm:col-span-1">
             <dt className="text-sm font-medium text-gray-500">{item.label}</dt>
-            <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">{item.value}</dd>
+            <dd className="mt-1 text-sm text-gray-900">{item.value}</dd>
           </div>
         ))}
       </dl>

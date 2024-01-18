@@ -5,7 +5,7 @@ type CardHeaderProps = {
   description: string;
 };
 
-const CardHeader: React.FC<CardHeaderProps> = ({ title, description }) => {
+const CardHeader = ({ title, description }: CardHeaderProps) => {
   return (
     <div className="px-4 py-5 sm:px-6">
       <h3 className="text-lg leading-6 font-medium text-gray-900">{title}</h3>

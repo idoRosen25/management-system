@@ -1,4 +1,3 @@
-"use Client";
 import Button from "./Button"
 
 

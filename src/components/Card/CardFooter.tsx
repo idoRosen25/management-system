@@ -4,13 +4,18 @@ import EditTaskButton from '../Button/EditTaskButton';
 import DeleteTaskButton from '../Button/DeleteTaskButton';
 
 
-const CardFooter: React.FC = () => {
+type CardFooterProps = {
+  footer: boolean;
+};
+
+const CardFooter = ({ footer }: CardFooterProps) => {
   return (
-    <div className='flex flex-row justify-between px-4 py-4 sm:px-6'> 
+    <div className="flex flex-row justify-between px-4 py-4 sm:px-6">
       <EditTaskButton />
-      <DeleteTaskButton/>
+      <DeleteTaskButton />
     </div>
   );
 };
+
 
 export default CardFooter;
