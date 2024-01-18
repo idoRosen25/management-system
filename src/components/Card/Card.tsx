@@ -8,6 +8,7 @@ type CardProps = {
   description: string;
   content: { label: string; value: string }[];
   footer?: boolean;
+  footerContent?: () => JSX.Element;
 };
 
 const Card = ( 
@@ -16,6 +17,7 @@ const Card = (
   description,
   content,
   footer,
+  footerContent,
   ...props // only for now. not used.
 
 } : CardProps ) => {
@@ -23,7 +25,7 @@ const Card = (
     <div className="bg-white overflow-hidden shadow rounded-lg">
       <CardHeader title={title} description={description} />
       <CardContent contentItems={content} />
-      {footer && <CardFooter footer={footer} />}
+      {footer ? <CardFooter /> : footerContent && footerContent()}
     </div>
   );
 }
