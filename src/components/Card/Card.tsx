@@ -5,7 +5,7 @@ import CardFooter from './CardFooter';
 
 type CardProps = {
   header: boolean;
-  headerContent: () => JSX.Element;
+  headerContent?: () => JSX.Element;
   main: () => JSX.Element;
   footer: boolean;
   footerContent?: () => JSX.Element;
@@ -22,7 +22,7 @@ const Card = (
 } : CardProps ) => {
   return (
     <div className="bg-white overflow-hidden shadow rounded-lg">
-      {header ? <CardHeader> {headerContent()} </CardHeader> : null}
+      {header ? <CardHeader>{headerContent && headerContent()}</CardHeader> : null}
       <CardContent>{main()}</CardContent>
       {footer ? <CardFooter /> : footerContent && footerContent()}
     </div>
