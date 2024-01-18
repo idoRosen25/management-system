@@ -23,7 +23,7 @@ export default async function Dashbaord() {
                       content={[
                         { label: 'Status', value: task.status },
                         { label: 'Assigned To', value: task.assignedTo?.fullName ?? 'Not Assigned' },
-                        { label: 'Created', value: task.createdAt.getDate() + '/' + task.createdAt.getMonth() + '/' + task.createdAt.getFullYear() },
+                        { label: 'Created', value: task.createdAt.toLocaleString("he") },
                       ]}
                       footer={true}
                     />
