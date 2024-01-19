@@ -24,7 +24,7 @@ const Card = (
     <div className="bg-white overflow-hidden shadow rounded-lg">
       {header ? <CardHeader>{headerContent && headerContent()}</CardHeader> : null}
       <CardContent>{main()}</CardContent>
-      {footer ? <CardFooter /> : footerContent && footerContent()}
+      {footer ? <CardFooter>{footerContent && footerContent()}</CardFooter> : null}
     </div>
   );
 }

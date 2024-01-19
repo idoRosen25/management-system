@@ -1,3 +1,5 @@
+import DeleteTaskButton from '@/components/Button/DeleteTaskButton';
+import EditTaskButton from '@/components/Button/EditTaskButton';
 import Card from '@/components/Card/Card';
 import { getTasks } from '@/utils/tasks';
 
@@ -48,6 +50,12 @@ export default async function Dashbaord() {
 
                     )}
                     footer={true}
+                    footerContent={() => (
+                      <div className="flex flex-row justify-between">
+                        <EditTaskButton />
+                        <DeleteTaskButton/>
+                      </div>
+                    )}
                   />
                 ))}
               </div>
