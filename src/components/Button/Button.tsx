@@ -125,6 +125,7 @@ export default function Button({
           mode="loader"
         />
       )}
+
       <span className={twMerge(isLoading ? 'opacity-0' : 'opacity-100')}>
         {text}
       </span>

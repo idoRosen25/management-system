@@ -2,6 +2,9 @@ import DeleteTaskButton from '@/components/Button/DeleteTaskButton';
 import EditTaskButton from '@/components/Button/EditTaskButton';
 import Card from '@/components/Card/Card';
 import { getTasks } from '@/utils/tasks';
+import TaskCardContent from '../../components/Tasks/TaskCardContent';
+import TaskCardFooter from '../../components/Tasks/TaskCardFooter';
+import TaskCardHeader from '../../components/Tasks/TaskCardHeader';
 
 export default async function Dashbaord() {
   const tasks = await getTasks();
@@ -18,44 +21,16 @@ export default async function Dashbaord() {
                 {tasks.map((task) => (
                   <Card
                     key={task.id}
-                    header={true}
-                    headerContent={() => (
-                      <div className="flex flex-row justify-between">
-                        <h3 className="text-lg leading-6 font-medium text-gray-900">
-                          {task.title}
-                        </h3>
-                      </div>
-                    )}
-                    main={() => (
-                      <>
-                      <div className='flex-col text-center'>
-                      <div key={task.id} className="sm:col-span-1">
-                      <dt className="text-sm font-medium text-gray-500">Assignee</dt>
-                      <dd className="mt-1 text-sm text-gray-900">{task.assignedTo?.fullName}</dd>
-                      </div>
-                      <div className="sm:col-span-2 mt-2">
-                      <dt className="text-sm font-medium text-gray-500">Description</dt>
-                      <dd className="mt-1 text-sm text-gray-900">{task.description}</dd>
-                      </div>
-                      <div className="sm:col-span-1 mt-2">
-                      <dt className="text-sm font-medium text-gray-500">Status</dt>
-                      <dd className="mt-1 text-sm text-gray-900">{task.status}</dd>
-                      </div>
-                      <div className="sm:col-span-1 mt-2">
-                      <dt className="text-sm font-medium text-gray-500">Created At</dt>
-                      <dd className="mt-1 text-sm text-gray-900">{task.createdAt.toLocaleString("he")}</dd>
-                      </div>
-                      </div>
-                      </>
-
-                    )}
-                    footer={true}
-                    footerContent={() => (
-                      <div className="flex flex-row justify-between">
-                        <EditTaskButton />
-                        <DeleteTaskButton/>
-                      </div>
-                    )}
+                    header={<TaskCardHeader title={task.title} />}
+                    main={
+                      <TaskCardContent
+                        assigneeName={task.assignedTo?.fullName}
+                        description={task.description}
+                        status={task.status}
+                        creationDate={task.createdAt}
+                      />
+                    }
+                    footer={<TaskCardFooter id={task.id} />}
                   />
                 ))}
               </div>
