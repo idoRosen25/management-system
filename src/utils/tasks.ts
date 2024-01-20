@@ -1,25 +1,30 @@
-import prisma from "../../lib/prismadb";
+import { TaskStatus } from '@prisma/client';
+import prisma from '../../lib/prismadb';
+import { pauseExecution } from './axios';
 
-
-export const getTasks = async () => {
-    const tasks = await prisma.task.findMany({
-      include: {
-        assignedTo: {
+export const getTasks = async (status?: TaskStatus) => {
+  const tasks = await prisma.task.findMany({
+    where: {
+      status,
+    },
+    include: {
+      assignedTo: {
+        select: {
+          assignee: {
             select: {
-                assignee: {
-                    select: {
-                        id: true,
-                        fullName: true,
-                        email: true,
-                    }
-                },
+              id: true,
+              fullName: true,
+              email: true,
             },
-        }
+          },
+        },
       },
-    });
-    return tasks.map((task) => ({
-        ...task,
-        assignedTo: task.assignedTo?.assignee,
-    }));
-  }
-  
+    },
+  });
+
+  await pauseExecution(3000);
+  return tasks.map((task) => ({
+    ...task,
+    assignedTo: task.assignedTo?.assignee,
+  }));
+};

@@ -38,4 +38,10 @@ export const getAxiosErrorMessage = (err: AxiosError) => {
   );
 };
 
+export function pauseExecution(milliseconds: number) {
+  return new Promise((resolve) => {
+    setTimeout(resolve, milliseconds);
+  });
+}
+
 export { http as axios };

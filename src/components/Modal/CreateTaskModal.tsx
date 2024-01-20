@@ -61,7 +61,6 @@ const CreateTaskModal: React.FC<Props> = ({ show, onClose }) => {
     setTimeout(() => setIsSubmitting(false), 500);
   };
 
-
   return (
     <ModalWrapper show={show} onBackdrop={handleClose}>
       <BaseForm

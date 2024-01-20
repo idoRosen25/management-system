@@ -15,7 +15,7 @@ export default function DashboardLayout({
       <Sidebar />
       <div className="w-full">
         <Header />
-        <main className="h-[calc(100vh-164px)] overflow-y-auto">
+        <main className="h-[calc(100vh-164px)] overflow-y-auto no-scrollbar">
           {children}
         </main>
         <Footer />

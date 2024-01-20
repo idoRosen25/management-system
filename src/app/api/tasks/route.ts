@@ -16,7 +16,7 @@ export async function POST(request: NextRequest) {
           creatorEmail,
         },
       });
-      try{        
+      try {
         assigneeEmail &&
           (await prisma.assignedTask.create({
             data: {
@@ -25,13 +25,26 @@ export async function POST(request: NextRequest) {
             },
           }));
         return task;
-      }catch(error){
-        task.id && await prisma.task.delete({where:{id:task.id}});
+      } catch (error) {
+        task.id && (await prisma.task.delete({ where: { id: task.id } }));
         throw error;
       }
     });
     return NextResponse.json(task);
   } catch (error: any) {
-    return NextResponse.json({ error: error?.toString() }, { status: error?.code === "P2003" ? 404 : 500 });
+    return NextResponse.json(
+      { error: error?.toString() },
+      { status: error?.code === 'P2003' ? 404 : 500 },
+    );
+  }
+}
+
+export async function DELETE(request: NextRequest) {
+  try {
+    const { id } = await request.json();
+    const task = await prisma.task.delete({ where: { id } });
+    return NextResponse.json(task);
+  } catch (error: any) {
+    return NextResponse.json({ error: error?.toString() }, { status: 500 });
   }
 }
