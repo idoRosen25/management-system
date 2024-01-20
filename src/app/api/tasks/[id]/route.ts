@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import prisma from '../../../../../lib/prismadb';
+import exp from 'constants';
 
 export async function PUT(request: NextRequest) {
  const id  = request.url.split('/').slice(-1)[0];
@@ -36,6 +37,19 @@ export async function DELETE(request: NextRequest) {
     await prisma.assignedTask.deleteMany({ where: { taskId: id } });
     await prisma.task.delete({ where: { id } });
     return NextResponse.json("task deleted");
+  } catch (error: any) {
+    return NextResponse.json({ error: error?.toString() }, { status: 500 });
+  }
+}
+
+export async function GET(request: NextRequest) {
+  try {
+    const id = request.url.split('/').slice(-1)[0];
+    const task = await prisma.task.findUnique({
+      where: { id },
+      include: { assignedTo: true },
+    });
+    return NextResponse.json(task);
   } catch (error: any) {
     return NextResponse.json({ error: error?.toString() }, { status: 500 });
   }
