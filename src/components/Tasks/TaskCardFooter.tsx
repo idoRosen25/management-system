@@ -5,7 +5,7 @@ const TaskCardFooter = ({ id }: { id: string }) => {
   return (
     <div className="flex flex-row justify-between">
       <EditTaskButton taskId={id} />
-      <DeleteTaskButton />
+      <DeleteTaskButton taskId={id} />
     </div>
   );
 };
