@@ -34,7 +34,7 @@ export async function DELETE(request: NextRequest) {
   try {
     const id = request.url.split('/').slice(-1)[0];
     await prisma.assignedTask.deleteMany({ where: { taskId: id } });
-    const task = await prisma.task.delete({ where: { id } });
+    await prisma.task.delete({ where: { id } });
     return NextResponse.json("task deleted");
   } catch (error: any) {
     return NextResponse.json({ error: error?.toString() }, { status: 500 });

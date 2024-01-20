@@ -7,8 +7,7 @@ import { useRouter } from "next/navigation";
 const DeleteTaskButton = ({ taskId }: { taskId: string }) => {
     const router = useRouter();
     const deleteTask = async () => {
-        const response = await axios.delete(Endpoints.TASKS + '/' + taskId);
-        console.log(response);
+        await axios.delete(Endpoints.TASKS + '/' + taskId);
         router.refresh();
     };
 
