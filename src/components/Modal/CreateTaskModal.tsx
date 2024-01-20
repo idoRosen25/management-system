@@ -8,9 +8,9 @@ import { createTaskSchema } from '@/schema/task';
 import z from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { axios } from '../../utils/axios';
-import { Endpoints, Routes } from '@/consts';
-import { useRouter } from 'next/navigation';
+import { Endpoints } from '@/consts';
 import { twMerge } from 'tailwind-merge';
+import { useRouter } from 'next/navigation';
 
 type Props = {
   show: boolean;
@@ -28,6 +28,11 @@ const CreateTaskModal: React.FC<Props> = ({ show, onClose }) => {
   } = useForm<FormData>({
     resolver: zodResolver(createTaskSchema),
   });
+
+  const handleClose = () => {
+    onClose();
+    reset();
+  };
 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const onSubmit: SubmitHandler<FormData> = async (data) => {
@@ -48,17 +53,15 @@ const CreateTaskModal: React.FC<Props> = ({ show, onClose }) => {
         throw new Error('Invalid credentials');
       }
 
-      router.replace(Routes.DASHBOARD, { scroll: true });
+      handleClose();
+      router.refresh();
     } catch (error) {
       console.error('Error in create task: ', error);
     }
     setTimeout(() => setIsSubmitting(false), 500);
   };
 
-  const handleClose = () => {
-    onClose();
-    reset();
-  };
+
   return (
     <ModalWrapper show={show} onBackdrop={handleClose}>
       <BaseForm

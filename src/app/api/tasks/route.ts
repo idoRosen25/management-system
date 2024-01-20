@@ -16,28 +16,22 @@ export async function POST(request: NextRequest) {
           creatorEmail,
         },
       });
-      assigneeEmail &&
-        (await prisma.assignedTask.create({
-          data: {
-            assigneeEmail,
-            taskId: task.id,
-          },
-        }));
-      return task;
+      try{        
+        assigneeEmail &&
+          (await prisma.assignedTask.create({
+            data: {
+              assigneeEmail,
+              taskId: task.id,
+            },
+          }));
+        return task;
+      }catch(error){
+        task.id && await prisma.task.delete({where:{id:task.id}});
+        throw error;
+      }
     });
     return NextResponse.json(task);
-  } catch (error) {
-    console.log(error);
-    return NextResponse.error();
-  }
-}
-
-export async function GET(request: NextRequest) {
-  try {
-    const tasks = await prisma.task.findMany({});
-    return NextResponse.json(tasks);
-  } catch (error) {
-    console.log(error);
-    return NextResponse.error();
+  } catch (error: any) {
+    return NextResponse.json({ error: error?.toString() }, { status: error?.code === "P2003" ? 404 : 500 });
   }
 }
