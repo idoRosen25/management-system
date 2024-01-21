@@ -3,7 +3,7 @@ import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { Endpoints } from '@/consts';
-import { createTaskSchema } from '@/schema/task';
+import { updateTaskSchema } from '@/schema/task';
 import { zodResolver } from '@hookform/resolvers/zod';
 import BaseForm from '../BaseForm';
 import ModalWrapper from './ModalWrapper';
@@ -17,7 +17,7 @@ type Props = {
   taskID: string;
 };
 
-type FormData = z.infer<typeof createTaskSchema>;
+type FormData = z.infer<typeof updateTaskSchema>;
 
 const EditTaskModal: React.FC<Props> = ({ show, onClose, taskID }) => {
   const router = useRouter();
@@ -27,7 +27,7 @@ const EditTaskModal: React.FC<Props> = ({ show, onClose, taskID }) => {
     reset,
     formState: { errors, isValid, isDirty },
   } = useForm<FormData>({
-    resolver: zodResolver(createTaskSchema),
+    resolver: zodResolver(updateTaskSchema),
   });
 
   const handleClose = () => {
