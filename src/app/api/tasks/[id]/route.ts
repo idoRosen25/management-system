@@ -1,8 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 import prisma from '../../../../../lib/prismadb';
-import exp from 'constants';
 
-export async function PUT(request: NextRequest, context: { params: any }) {
+
+export async function PUT(request: NextRequest, context: { params: NodeJS.Dict<string>  }) {
   const id = context.params.id;
   const { title, description, assigneeEmail } = await request.json();
   const task = await prisma.$transaction(async () => {
@@ -30,7 +30,7 @@ export async function PUT(request: NextRequest, context: { params: any }) {
   return NextResponse.json(task);
 }
 
-export async function DELETE(request: NextRequest, context: { params: any }) {
+export async function DELETE(request: NextRequest, context: { params: NodeJS.Dict<string> }) {
   try {
     const id = context.params.id;
     await prisma.assignedTask.deleteMany({ where: { taskId: id } });
@@ -41,7 +41,7 @@ export async function DELETE(request: NextRequest, context: { params: any }) {
   }
 }
 
-export async function GET(request: NextRequest, context: { params: any }) {
+export async function GET(request: NextRequest, context: { params: NodeJS.Dict<string> }) {
   try {
     const id = context.params.id;
     const task = await prisma.task.findUnique({
