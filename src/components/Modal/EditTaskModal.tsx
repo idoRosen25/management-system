@@ -58,6 +58,7 @@ const EditTaskModal: React.FC<Props> = ({ show, onClose, taskID }) => {
       setIsSubmitting(false);
       router.refresh();
     } catch (error) {
+      setIsSubmitting(false);
       console.error('Error in create task: ', error);
     }
   };
