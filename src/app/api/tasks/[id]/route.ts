@@ -41,10 +41,10 @@ export async function DELETE(
 ) {
   try {
     const id = context.params.id;
-    await prisma.$transaction(async () => {([
+    await prisma.$transaction([
       prisma.assignedTask.deleteMany({ where: { taskId: id } }),
       prisma.task.delete({ where: { id } })
-    ])});
+    ]);
     return NextResponse.json('task deleted');
   } catch (error: any) {
     return NextResponse.json({ error: error?.toString() }, { status: 500 });
