@@ -1,13 +1,28 @@
 'use client';
+import { Endpoints } from "@/consts";
 import Button from "./Button";
+import { axios } from "@/utils/axios";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
 
-const DeleteTaskButton = ({ className = ''}: { className?: string }) => {
+
+const DeleteTaskButton = ({ taskId }: { taskId: string }) => {
+    const router = useRouter();
+    const [loading, setLoading] = useState(false);
+    const deleteTask = async () => {
+        setLoading(true);
+        await axios.delete(Endpoints.TASKS + '/' + taskId);
+        setLoading(false);
+        router.refresh();
+    };
+
     return (
+        
         <Button
-        className={className}
         text={'Delete task'}
         color="danger"
-        onClick={() => console.log('Delete task button clicked')}
+        onClick={() => deleteTask()}
+        isLoading={loading}
         />
     );
 }
