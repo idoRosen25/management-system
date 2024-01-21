@@ -42,8 +42,8 @@ export async function DELETE(
   try {
     const id = context.params.id;
     await prisma.$transaction(async () => {([
-      await prisma.assignedTask.deleteMany({ where: { taskId: id } }),
-      await prisma.task.delete({ where: { id } })
+      prisma.assignedTask.deleteMany({ where: { taskId: id } }),
+      prisma.task.delete({ where: { id } })
     ])});
     return NextResponse.json('task deleted');
   } catch (error: any) {
