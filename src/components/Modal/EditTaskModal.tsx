@@ -12,7 +12,6 @@ import { twMerge } from 'tailwind-merge';
 import z from 'zod';
 import SelectInput from '../Input/SelectInput';
 import { TaskStatus } from '@prisma/client';
-import TagCloud from '../TagCloud';
 
 type Props = {
   show: boolean;
