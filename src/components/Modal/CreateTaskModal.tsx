@@ -1,3 +1,4 @@
+'use client';
 import ModalWrapper from './ModalWrapper';
 import BaseForm from '../BaseForm';
 import { useForm, SubmitHandler } from 'react-hook-form';

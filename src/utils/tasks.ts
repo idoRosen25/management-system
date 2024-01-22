@@ -22,7 +22,7 @@ export const getTasks = async (status?: TaskStatus) => {
     },
   });
 
-  await pauseExecution(3000);
+  // await pauseExecution(500000);
   return tasks.map((task) => ({
     ...task,
     assignedTo: task.assignedTo?.assignee,
