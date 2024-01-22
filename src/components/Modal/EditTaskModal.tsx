@@ -10,8 +10,8 @@ import ModalWrapper from './ModalWrapper';
 import FormInput from '../Input/FormInput';
 import { twMerge } from 'tailwind-merge';
 import z from 'zod';
-import { Task } from '@prisma/client';
-import TagCloud from '../TagCloud';
+import SelectInput from '../Input/SelectInput';
+import { TaskStatus } from '@prisma/client';
 
 type Props = {
   show: boolean;
@@ -27,6 +27,8 @@ const EditTaskModal: React.FC<Props> = ({ show, onClose, task }) => {
     handleSubmit,
     register,
     reset,
+    setValue,
+    watch,
     formState: { errors, isValid, isDirty },
   } = useForm<FormData>({
     resolver: zodResolver(updateTaskSchema),
@@ -34,6 +36,7 @@ const EditTaskModal: React.FC<Props> = ({ show, onClose, task }) => {
       title: task?.title,
       description: task?.description,
       assigneeEmail: task?.assignedTo?.assignee.email,
+      status: task?.status,
     },
   });
 
@@ -117,6 +120,18 @@ const EditTaskModal: React.FC<Props> = ({ show, onClose, task }) => {
           {...register('assigneeEmail')}
           error={errors?.assigneeEmail?.message}
         />
+        <div className='px-2'>
+        <SelectInput
+          selectedItemId={watch('status') || task?.status}
+          onChange={(value: string) => {
+            setValue('status', value as TaskStatus, { shouldDirty: true , shouldValidate: true});
+          }}
+          title="status"
+          items={Object.entries(TaskStatus).map(([key, value]) => {
+            return { id: key, name: value.replaceAll('_', ' ') };
+          })}
+        />
+        </div>
       </BaseForm>
     </ModalWrapper>
   );
