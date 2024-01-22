@@ -1,4 +1,4 @@
-import { axios } from '../../utils/axios';
+import { axios, pauseExecution } from '../../utils/axios';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
@@ -12,6 +12,7 @@ import { twMerge } from 'tailwind-merge';
 import z from 'zod';
 import SelectInput from '../Input/SelectInput';
 import { TaskStatus } from '@prisma/client';
+import Alert from '../Alerts/Alert';
 
 type Props = {
   show: boolean;
@@ -23,6 +24,7 @@ type FormData = z.infer<typeof updateTaskSchema>;
 
 const EditTaskModal: React.FC<Props> = ({ show, onClose, task }) => {
   const router = useRouter();
+  const [toast, setToast] = useState(false);
   const {
     handleSubmit,
     register,
@@ -68,7 +70,8 @@ const EditTaskModal: React.FC<Props> = ({ show, onClose, task }) => {
       if (!response.data) {
         throw new Error('Invalid credentials');
       }
-
+      setToast(true);
+      await pauseExecution(3000);
       handleClose();
       setIsSubmitting(false);
       router.refresh();
@@ -79,70 +82,80 @@ const EditTaskModal: React.FC<Props> = ({ show, onClose, task }) => {
   };
 
   return (
-    <ModalWrapper show={show} onBackdrop={handleClose}>
-      <BaseForm
-        title="Edit task"
-        onSubmit={handleSubmit(onSubmit)}
-        submitText="Edit task"
-        isSubmitting={isSubmitting}
-        disabled={!isDirty || !isValid}
-        onCancel={handleClose}
-      >
-        <FormInput
-          title="Title"
-          placeholder="Title"
-          inputClassName="mb-2"
-          type="text"
-          defaultValue={task?.title}
-          {...register('title')}
-          error={errors?.title?.message}
-        />
-        <FormInput
-          title="Description"
-          placeholder="Description"
-          type="text"
-          defaultValue={task?.description}
-          customInput={
-            <textarea
-              className={twMerge(
-                'border border-gray-400 rounded-md pl-2 w-[54%]',
-                errors.description?.message ? 'border-2 border-red-600' : '',
-              )}
-              placeholder="Description"
-              {...register('description', {
-                required: 'Description is required',
+    <div>
+      <ModalWrapper show={show} onBackdrop={handleClose}>
+        <BaseForm
+          title="Edit task"
+          onSubmit={handleSubmit(onSubmit)}
+          submitText="Edit task"
+          isSubmitting={isSubmitting}
+          disabled={!isDirty || !isValid}
+          onCancel={handleClose}
+        >
+          <FormInput
+            title="Title"
+            placeholder="Title"
+            inputClassName="mb-2"
+            type="text"
+            defaultValue={task?.title}
+            {...register('title')}
+            error={errors?.title?.message}
+          />
+          <FormInput
+            title="Description"
+            placeholder="Description"
+            type="text"
+            defaultValue={task?.description}
+            customInput={
+              <textarea
+                className={twMerge(
+                  'border border-gray-400 rounded-md pl-2 w-[54%]',
+                  errors.description?.message ? 'border-2 border-red-600' : '',
+                )}
+                placeholder="Description"
+                {...register('description', {
+                  required: 'Description is required',
+                })}
+              />
+            }
+            {...register('description')}
+            error={errors?.description?.message}
+          />
+          <FormInput
+            title="Assignee"
+            placeholder="Assignee"
+            inputClassName="mb-2"
+            type="text"
+            defaultValue={task?.assignedTo?.assignee?.email}
+            {...register('assigneeEmail')}
+            error={errors?.assigneeEmail?.message}
+          />
+          <div className="px-2">
+            <SelectInput
+              selectedItemId={watch('status') || task?.status}
+              onChange={(value: string) => {
+                setValue('status', value as TaskStatus, {
+                  shouldDirty: true,
+                  shouldValidate: true,
+                });
+              }}
+              title="status"
+              items={Object.entries(TaskStatus).map(([key, value]) => {
+                return { id: key, name: value.replaceAll('_', ' ') };
               })}
             />
-          }
-          {...register('description')}
-          error={errors?.description?.message}
-        />
-        <FormInput
-          title="Assignee"
-          placeholder="Assignee"
-          inputClassName="mb-2"
-          type="text"
-          defaultValue={task?.assignedTo?.assignee?.email}
-          {...register('assigneeEmail')}
-          error={errors?.assigneeEmail?.message}
-        />
-        <div className="px-2">
-          <SelectInput
-            selectedItemId={watch('status') || task?.status}
-            onChange={(value: string) => {
-              setValue('status', value as TaskStatus, {
-                shouldDirty: true,
-                shouldValidate: true,
-              });
-            }}
-            title="status"
-            items={Object.entries(TaskStatus).map(([key, value]) => {
-              return { id: key, name: value.replaceAll('_', ' ') };
-            })}
+          </div>
+        </BaseForm>
+        {toast && (
+          <Alert
+            message="Task updated successfully"
+            type="success"
+            duration={2000}
+            isVisible={toast}
           />
-        </div>
-      </BaseForm>
-    </ModalWrapper>
+        )}
+      </ModalWrapper>
+    </div>
   );
 };
 

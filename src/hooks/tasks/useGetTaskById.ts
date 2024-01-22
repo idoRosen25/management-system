@@ -3,7 +3,7 @@ import { axios, pauseExecution } from '../../utils/axios';
 
 const useGetTaskById = (taskId?: string) => {
   const getTaskById = useCallback(async (id: string) => {
-    await pauseExecution(5000);
+    await pauseExecution(3000);
     try {
       return await prisma?.task.findFirstOrThrow({
         where: {
