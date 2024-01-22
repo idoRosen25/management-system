@@ -124,8 +124,8 @@ const CreateTaskModal: React.FC<Props> = ({ show, onClose }) => {
         <div className='mr-10 ml-2'>
         <SelectInput
           selectedItemId={watch('status') || TaskStatus.PENDING}
-          onChange={(value: TaskStatus) => {
-            setValue('status', value, {
+          onChange={(value: string) => {
+            setValue('status', value as TaskStatus, {
               shouldDirty: true,
               shouldValidate: true,
             });

@@ -123,8 +123,8 @@ const EditTaskModal: React.FC<Props> = ({ show, onClose, task }) => {
         <div className='px-2'>
         <SelectInput
           selectedItemId={watch('status') || task?.status}
-          onChange={(value: TaskStatus) => {
-            setValue('status', value, { shouldDirty: true , shouldValidate: true});
+          onChange={(value: string) => {
+            setValue('status', value as TaskStatus, { shouldDirty: true , shouldValidate: true});
           }}
           title="status"
           items={Object.entries(TaskStatus).map(([key, value]) => {
