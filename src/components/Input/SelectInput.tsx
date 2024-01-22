@@ -9,7 +9,7 @@ type Props = {
     name: string;
   }[];
   selectedItemId?: string;
-  onChange: (value: any) => void;
+  onChange: (value: string) => void;
   [key: string]: unknown;
 };
 
