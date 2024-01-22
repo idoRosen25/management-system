@@ -1,6 +1,6 @@
 import { Task, User } from '@prisma/client';
 import Link from 'next/link';
-import { Routes } from '../../consts';
+import { FE_URL, Routes } from '../../consts';
 import { format } from 'date-fns';
 
 type Props = {
@@ -23,7 +23,7 @@ const TaskCard: React.FC<Props> = ({ task }) => {
         <p className="text-gray-400">Reporter: {task.creator.fullName}</p>
       </div>
       <Link
-        href={`http://localhost:3000${Routes.DASHBOARD}/${task.id}`}
+        href={`${FE_URL}${Routes.DASHBOARD}/${task.id}`}
         className="row-start-2 row-end-2 col-start-2 col-end-2 hidden xl:flex justify-self-end self-end h-fit w-fit text-indigo-600 font-bold text-xs border border-indigo-600 rounded-full py-0.5 px-1 cursor-pointer"
       >
         <span className="flex items-center jusity-center">{'→'}</span>
