@@ -91,6 +91,7 @@ const EditTaskModal: React.FC<Props> = ({ show, onClose, task }) => {
           title="Title"
           placeholder="Title"
           type="text"
+          defaultValue={task?.title}
           {...register('title')}
           error={errors?.title?.message}
         />
@@ -98,6 +99,7 @@ const EditTaskModal: React.FC<Props> = ({ show, onClose, task }) => {
           title="Description"
           placeholder="Description"
           type="text"
+          defaultValue={task?.description}
           customInput={
             <textarea
               className={twMerge(
@@ -117,20 +119,24 @@ const EditTaskModal: React.FC<Props> = ({ show, onClose, task }) => {
           title="Assignee"
           placeholder="Assignee"
           type="text"
+          defaultValue={task?.assignedTo?.assignee?.email}
           {...register('assigneeEmail')}
           error={errors?.assigneeEmail?.message}
         />
-        <div className='px-2'>
-        <SelectInput
-          selectedItemId={watch('status') || task?.status}
-          onChange={(value: string) => {
-            setValue('status', value as TaskStatus, { shouldDirty: true , shouldValidate: true});
-          }}
-          title="status"
-          items={Object.entries(TaskStatus).map(([key, value]) => {
-            return { id: key, name: value.replaceAll('_', ' ') };
-          })}
-        />
+        <div className="px-2">
+          <SelectInput
+            selectedItemId={watch('status') || task?.status}
+            onChange={(value: string) => {
+              setValue('status', value as TaskStatus, {
+                shouldDirty: true,
+                shouldValidate: true,
+              });
+            }}
+            title="status"
+            items={Object.entries(TaskStatus).map(([key, value]) => {
+              return { id: key, name: value.replaceAll('_', ' ') };
+            })}
+          />
         </div>
       </BaseForm>
     </ModalWrapper>

@@ -9,5 +9,3 @@ export enum Endpoints {
   AUTH = '/auth',
   TASKS = '/tasks',
 }
-
-export const FE_URL = process.env.NEXT_PUBLIC_FE_URL;
