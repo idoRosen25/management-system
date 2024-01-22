@@ -100,13 +100,12 @@ const EditTaskModal: React.FC<Props> = ({ show, onClose, task }) => {
         <FormInput
           title="Description"
           placeholder="Description"
-          inputClassName="mb-2"
           type="text"
           defaultValue={task?.description}
           customInput={
             <textarea
               className={twMerge(
-                'border border-gray-400 rounded-md mb-2 w-auto h-auto',
+                'border border-gray-400 rounded-md pl-2 w-[54%]',
                 errors.description?.message ? 'border-2 border-red-600' : '',
               )}
               placeholder="Description"
