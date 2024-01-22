@@ -12,7 +12,7 @@ import { twMerge } from 'tailwind-merge';
 import z from 'zod';
 import SelectInput from '../Input/SelectInput';
 import { TaskStatus } from '@prisma/client';
-import Alert from '../Alerts/Alert';
+import toast from 'react-hot-toast';
 
 type Props = {
   show: boolean;
@@ -24,7 +24,6 @@ type FormData = z.infer<typeof updateTaskSchema>;
 
 const EditTaskModal: React.FC<Props> = ({ show, onClose, task }) => {
   const router = useRouter();
-  const [toast, setToast] = useState(false);
   const {
     handleSubmit,
     register,
@@ -70,7 +69,7 @@ const EditTaskModal: React.FC<Props> = ({ show, onClose, task }) => {
       if (!response.data) {
         throw new Error('Invalid credentials');
       }
-      setToast(true);
+      toast.success('Task updated successfully');
       await pauseExecution(3000);
       handleClose();
       setIsSubmitting(false);
@@ -146,14 +145,6 @@ const EditTaskModal: React.FC<Props> = ({ show, onClose, task }) => {
             />
           </div>
         </BaseForm>
-        {toast && (
-          <Alert
-            message="Task updated successfully"
-            type="success"
-            duration={2000}
-            isVisible={toast}
-          />
-        )}
       </ModalWrapper>
     </div>
   );

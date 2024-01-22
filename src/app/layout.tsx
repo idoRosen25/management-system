@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import { Toaster } from 'react-hot-toast';
 import './globals.css';
 import App from '../app';
 
@@ -12,5 +13,10 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  return <App>{children}</App>;
+  return (
+    <App>
+      <Toaster position="bottom-center" />
+      {children}
+    </App>
+  );
 }
