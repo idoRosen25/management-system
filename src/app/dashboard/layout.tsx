@@ -3,8 +3,10 @@ import Sidebar from '@/components/Sidebar';
 
 export default function DashboardLayout({
   children,
+  task,
 }: {
   children: React.ReactNode;
+  task: React.ReactNode;
 }) {
   return (
     <div className="flex overflow-y-hidden no-scrollbar">
@@ -15,6 +17,7 @@ export default function DashboardLayout({
           {children}
         </main>
       </div>
+      {task}
     </div>
   );
 }

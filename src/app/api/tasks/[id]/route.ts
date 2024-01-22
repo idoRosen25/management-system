@@ -3,31 +3,50 @@ import prisma from '../../../../../lib/prismadb';
 
 export async function PUT(
   request: NextRequest,
-  context: { params: NodeJS.Dict<string> },
+  context: { params: { id: string } },
 ) {
-  const id = context.params.id;
+  const { id } = context.params;
   const { title, description, assigneeEmail } = await request.json();
   const task = await prisma.$transaction(async () => {
-    try{
+    try {
       const task = await prisma.task.findUnique({
         where: { id },
         include: { assignedTo: true },
       });
       if (!task) throw new Error('Task not found');
-        await prisma.task.update({
-          where: { id },
-          data: {
-            title,
-            description,
+      await prisma.task.update({
+        where: { id },
+        data: {
+          title,
+          description,
+        },
+      });
+      if (assigneeEmail === null && task.assignedTo?.assigneeEmail) {
+        await prisma.assignedTask.delete({
+          where: {
+            taskId_assigneeEmail: {
+              taskId: task.id,
+              assigneeEmail: task.assignedTo?.assigneeEmail,
+            },
           },
         });
-        if (assigneeEmail && assigneeEmail !== task.assignedTo?.assigneeEmail) {
-          await prisma.assignedTask.update({
-            where: { taskId: id },
-            data: { assigneeEmail },
-          });
-        } 
-        return task;
+      } else if (
+        assigneeEmail &&
+        assigneeEmail !== task.assignedTo?.assigneeEmail
+      ) {
+        await prisma.assignedTask.upsert({
+          where: { taskId: id },
+          create: {
+            assigneeEmail,
+            taskId: task.id,
+          },
+          update: {
+            assigneeEmail,
+          },
+        });
+      }
+
+      return task;
     } catch (error) {
       throw error;
     }
@@ -37,13 +56,13 @@ export async function PUT(
 
 export async function DELETE(
   request: NextRequest,
-  context: { params: NodeJS.Dict<string> },
+  context: { params: { id: string } },
 ) {
   try {
-    const id = context.params.id;
+    const { id } = context.params;
     await prisma.$transaction([
       prisma.assignedTask.deleteMany({ where: { taskId: id } }),
-      prisma.task.delete({ where: { id } })
+      prisma.task.delete({ where: { id } }),
     ]);
     return NextResponse.json('task deleted');
   } catch (error: any) {
@@ -53,10 +72,10 @@ export async function DELETE(
 
 export async function GET(
   request: NextRequest,
-  context: { params: NodeJS.Dict<string> },
+  context: { params: { id: string } },
 ) {
   try {
-    const id = context.params.id;
+    const { id } = context.params;
     const task = await prisma.task.findUnique({
       where: { id },
       include: { assignedTo: true },
