@@ -76,7 +76,7 @@ const EditTaskModal: React.FC<Props> = ({ show, onClose, task }) => {
       router.refresh();
     } catch (error) {
       setIsSubmitting(false);
-      console.error('Error in create task: ', error);
+      toast.error("Couldn't update task");
     }
   };
 
