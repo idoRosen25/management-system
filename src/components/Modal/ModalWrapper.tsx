@@ -31,10 +31,10 @@ const ModalWrapper: React.FC<Props> = ({
   }
   return (
     <>
-      <dialog className="fixed left-0 top-0 w-full h-full bg-black bg-opacity-50 z-50 overflow-auto backdrop-blur flex justify-center items-center">
+      <dialog className="fixed left-0 top-0 w-full h-full bg-black bg-opacity-50 z-50 overflow-auto backdrop-blur flex justify-center text-center items-center">
         <div
           className={twMerge(
-            'relative bg-white p-4',
+            'relative bg-white p-4 rounded-lg shadow-xl',
             fullScreen
               ? 'w-[95%] h-[90%] m-auto'
               : 'w-[calc(100%-5rem)] md:w-[calc(100%-30rem)] lg:w-fit lg:min-w-[25rem]',
