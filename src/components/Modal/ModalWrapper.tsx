@@ -31,7 +31,7 @@ const ModalWrapper: React.FC<Props> = ({
   }
   return (
     <>
-      <dialog className="fixed left-0 top-0 w-full h-full bg-black bg-opacity-50 z-50 overflow-auto backdrop-blur flex justify-center text-center items-center">
+      <dialog className="fixed left-0 top-0 w-full h-full bg-black bg-opacity-50 z-50 overflow-auto backdrop-blur flex justify-center items-center text-center">
         <div
           className={twMerge(
             'relative bg-white p-4 rounded-lg shadow-xl',
