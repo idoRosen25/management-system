@@ -2,8 +2,10 @@ import Image from 'next/image';
 import LinkWrapper from './LinkWrapper';
 import { Routes } from '../consts';
 import PlatformIcon from '../../public/logo-icon.png';
+import { getLoggedInUser } from '@/utils/auth';
 
 const Sidebar = () => {
+  const User = getLoggedInUser();
   return (
     <div
       className="hidden lg:block bg-green-400 min-w-[15rem] max-w-max max-h-screen"
@@ -104,6 +106,9 @@ const Sidebar = () => {
           </svg>
           <span className="text-lg font-medium">Dashboard</span>
         </LinkWrapper>
+        <div className="absolute bottom-0 p-5">
+          Hello, <span className="font-bold">{User?.fullName}</span>
+        </div>
       </div>
     </div>
   );
