@@ -6,7 +6,7 @@ import PlatformIcon from '../../public/logo-icon.png';
 const Sidebar = () => {
   return (
     <div
-      className="hidden lg:block bg-green-400 min-w-[15rem] max-w-max"
+      className="hidden lg:block bg-green-400 min-w-[15rem] max-w-max max-h-screen"
       aria-modal="true"
     >
       <LinkWrapper

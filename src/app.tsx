@@ -7,7 +7,14 @@ const inter = Inter({ subsets: ['latin'] });
 export default function App({ children }: { children: ReactNode }) {
   return (
     <html lang="en">
-      <body className={twMerge(inter.className, 'h-screen')}>{children}</body>
+      <body
+        className={twMerge(
+          inter.className,
+          'h-screen max-h-screen overflow-y-hidden no-scrollbar',
+        )}
+      >
+        {children}
+      </body>
     </html>
   );
 }

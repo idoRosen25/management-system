@@ -10,16 +10,18 @@ import ModalWrapper from './ModalWrapper';
 import FormInput from '../Input/FormInput';
 import { twMerge } from 'tailwind-merge';
 import z from 'zod';
+import { Task } from '@prisma/client';
+import TagCloud from '../TagCloud';
 
 type Props = {
   show: boolean;
   onClose: () => void; // Add onClose prop
-  taskID: string;
+  task: any;
 };
 
 type FormData = z.infer<typeof updateTaskSchema>;
 
-const EditTaskModal: React.FC<Props> = ({ show, onClose, taskID }) => {
+const EditTaskModal: React.FC<Props> = ({ show, onClose, task }) => {
   const router = useRouter();
   const {
     handleSubmit,
@@ -28,6 +30,11 @@ const EditTaskModal: React.FC<Props> = ({ show, onClose, taskID }) => {
     formState: { errors, isValid, isDirty },
   } = useForm<FormData>({
     resolver: zodResolver(updateTaskSchema),
+    defaultValues: {
+      title: task?.title,
+      description: task?.description,
+      assigneeEmail: task?.assignedTo?.assignee.email,
+    },
   });
 
   const handleClose = () => {
@@ -41,9 +48,14 @@ const EditTaskModal: React.FC<Props> = ({ show, onClose, taskID }) => {
     setIsSubmitting(true);
 
     try {
+      const removeAssignee =
+        !!task?.assignedTo?.assignee && !data.assigneeEmail;
       const response = await axios.put(
-        Endpoints.TASKS + '/' + taskID,
-        JSON.stringify({ ...data }),
+        Endpoints.TASKS + '/' + task.id,
+        JSON.stringify({
+          ...data,
+          assigneeEmail: removeAssignee ? null : data.assigneeEmail,
+        }),
         {
           headers: {
             'Content-Type': 'application/json',

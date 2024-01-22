@@ -86,7 +86,6 @@ export async function GET(request: NextRequest) {
     // return the user
     const { passwordHash, ...userData } = user;
 
-    console.log('in login : ', process.env.NEXT_PUBLIC_JWT_SECRET);
     const token = jwt.sign(
       userData,
       process.env.NEXT_PUBLIC_JWT_SECRET as string,

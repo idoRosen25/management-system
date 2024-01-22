@@ -1,7 +1,6 @@
 import { TaskStatus } from '@prisma/client';
 import TaskStatusColumn from '../../components/Tasks/TaskStatusColumn';
 import { Suspense } from 'react';
-import CardLoader from '../../components/Card/CardLoader';
 import TaskColumnLoader from '../../components/Tasks/TaskColumnLoader';
 
 export default function Dashbaord() {
@@ -11,7 +10,7 @@ export default function Dashbaord() {
       <div className="bg-white py-6">
         <div className="w-full mx-auto px-4 sm:px-6 lg:px-8">
           {/* Replace with your content */}
-          <div className="grid grid-cols-3 gap-6 h-full">
+          <div className="grid grid-cols-3 gap-6 w-3/4">
             {Object.values(TaskStatus).map((status, index) => (
               <Suspense
                 key={`suspence_task_status_${status}`}
