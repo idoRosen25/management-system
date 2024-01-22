@@ -8,7 +8,7 @@ async function TaskStatusColumn({ status }: { status: TaskStatus }) {
   const tasks = await getTasks(status);
 
   return (
-    <div className="flex flex-col border-2 border-gray-200 p-2 gap-y-2 bg-gray-200 rounded-md">
+    <div className="flex flex-col p-2 gap-y-2 rounded-md">
       {tasks.map((task) => (
         <Card key={task.id}>
           <TaskCard task={task as TaskCardData} />
