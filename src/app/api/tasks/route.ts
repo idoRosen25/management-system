@@ -4,7 +4,7 @@ import { getLoggedInUser } from '../../../utils/auth';
 
 export async function POST(request: NextRequest) {
   try {
-    const { title, description, assigneeEmail } = await request.json();
+    const { title, description, assigneeEmail , status } = await request.json();
     const creatorEmail = getLoggedInUser()?.email;
     if (!creatorEmail) throw new Error('No reporter email found');
 
@@ -14,6 +14,7 @@ export async function POST(request: NextRequest) {
           title,
           description,
           creatorEmail,
+          status
         },
       });
       try {

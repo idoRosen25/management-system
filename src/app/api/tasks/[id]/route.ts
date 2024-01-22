@@ -6,7 +6,7 @@ export async function PUT(
   context: { params: { id: string } },
 ) {
   const { id } = context.params;
-  const { title, description, assigneeEmail } = await request.json();
+  const { title, description, assigneeEmail, status } = await request.json();
   const task = await prisma.$transaction(async () => {
     try {
       const task = await prisma.task.findUnique({
@@ -19,6 +19,7 @@ export async function PUT(
         data: {
           title,
           description,
+          status
         },
       });
       if (assigneeEmail === null && task.assignedTo?.assigneeEmail) {

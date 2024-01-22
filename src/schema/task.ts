@@ -7,7 +7,7 @@ export const createTaskSchema = z.object({
     .string({ required_error: 'Description cannot be empty' })
     .min(2)
     .max(4000),
-  status: z.nativeEnum(TaskStatus).optional(),
+  status: z.nativeEnum(TaskStatus).default(TaskStatus.PENDING).optional(),
   assigneeEmail: z.string().optional(),
 });
 
@@ -22,6 +22,6 @@ export const updateTaskSchema = z.object({
     .min(2)
     .max(4000)
     .optional(),
-  status: z.nativeEnum(TaskStatus).optional(),
+  status: z.nativeEnum(TaskStatus).default(TaskStatus.PENDING).optional(),
   assigneeEmail: z.string().optional(),
 });
