@@ -11,6 +11,7 @@ import FormInput from '../Input/FormInput';
 import { twMerge } from 'tailwind-merge';
 import z from 'zod';
 import { Task } from '@prisma/client';
+import TagCloud from '../TagCloud';
 
 type Props = {
   show: boolean;
@@ -21,7 +22,6 @@ type Props = {
 type FormData = z.infer<typeof updateTaskSchema>;
 
 const EditTaskModal: React.FC<Props> = ({ show, onClose, task }) => {
-  console.log('task in edit modal: ', task);
   const router = useRouter();
   const {
     handleSubmit,

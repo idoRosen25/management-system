@@ -9,8 +9,8 @@ export default function Header() {
       aria-label="Global"
     >
       <div className="flex lg:flex-1 gap-4"></div>
-      <LogoutButton className="justify-self-end" />
       <CreateTaskButton className="justify-self-end" />
+      <LogoutButton className="justify-self-end ml-2" />
     </nav>
   );
 }

@@ -14,6 +14,7 @@ const Component = ({
     <Button
       className={className}
       text={'Logout'}
+      color="danger"
       onClick={() => {
         handleLogout();
         router.refresh();

@@ -6,9 +6,7 @@ const Button = dynamic(() => import('./Component'), { ssr: false });
 
 const handleLogout = async () => {
   'use server';
-  const logout = deleteCookie('access_token');
-  console.log('logout response: ', logout);
-  console.log('is authed: ', isAuthenticated());
+  deleteCookie('access_token');
 };
 const LogoutButton = ({ className = '' }: { className?: string }) => {
   return <Button className={className} handleLogout={handleLogout} />;
