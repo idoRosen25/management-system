@@ -12,7 +12,7 @@ const TaskCard: React.FC<Props> = ({ task }) => {
   }
 
   return (
-    <div className="text-xs grid grid-rows-2 grid-cols-2 transition-all duration-500 bg-white border border-indigo-600 rounded-lg shadow hover:shadow-xl p-4">
+    <div className="text-xs grid grid-rows-2 grid-cols-2 transition-all duration-500 bg-white border border-indigo-600 rounded-lg shadow hover:shadow-xl p-4 text-center">
       <h5 className="row-start-1 row-end-2 col-span-2 mb-1 font-bold text-lg xl:text-xl truncate">
         {task.title}
       </h5>
