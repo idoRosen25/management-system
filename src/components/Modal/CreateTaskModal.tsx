@@ -8,12 +8,13 @@ import { emailRegex } from '../../consts';
 import { createTaskSchema } from '@/schema/task';
 import z from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { axios } from '../../utils/axios';
+import { axios, pauseExecution } from '../../utils/axios';
 import { Endpoints } from '@/consts';
 import { twMerge } from 'tailwind-merge';
 import { useRouter } from 'next/navigation';
 import SelectInput from '../Input/SelectInput';
 import { TaskStatus } from '@prisma/client';
+import toast from 'react-hot-toast';
 
 type Props = {
   show: boolean;
@@ -57,11 +58,13 @@ const CreateTaskModal: React.FC<Props> = ({ show, onClose }) => {
       if (!response.data) {
         throw new Error('Invalid credentials');
       }
-
+      toast.success('Task created successfully');
+      await pauseExecution(3000);
       handleClose();
       router.refresh();
     } catch (error) {
       console.error('Error in create task: ', error);
+      toast.error('Error creating task');
     }
     setTimeout(() => setIsSubmitting(false), 500);
   };
@@ -121,20 +124,20 @@ const CreateTaskModal: React.FC<Props> = ({ show, onClose }) => {
             />
           }
         />
-        <div className='mr-10 ml-2'>
-        <SelectInput
-          selectedItemId={watch('status') || TaskStatus.PENDING}
-          onChange={(value: string) => {
-            setValue('status', value as TaskStatus, {
-              shouldDirty: true,
-              shouldValidate: true,
-            });
-          }}
-          title="status"
-          items={Object.entries(TaskStatus).map(([key, value]) => {
-            return { id: key, name: value.replaceAll('_', ' ') };
-          })}
-        />
+        <div className="mr-10 ml-2">
+          <SelectInput
+            selectedItemId={watch('status') || TaskStatus.PENDING}
+            onChange={(value: string) => {
+              setValue('status', value as TaskStatus, {
+                shouldDirty: true,
+                shouldValidate: true,
+              });
+            }}
+            title="status"
+            items={Object.entries(TaskStatus).map(([key, value]) => {
+              return { id: key, name: value.replaceAll('_', ' ') };
+            })}
+          />
         </div>
       </BaseForm>
     </ModalWrapper>
