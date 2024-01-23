@@ -15,7 +15,7 @@ export default function RootLayout({
 }) {
   return (
     <App>
-      <Toaster position="bottom-center" />
+      <Toaster position="bottom-left" />
       {children}
     </App>
   );
