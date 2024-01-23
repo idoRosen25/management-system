@@ -3,10 +3,8 @@ import Sidebar from '@/components/Sidebar';
 
 export default function UserLayout({
   children,
-  task,
 }: {
   children: React.ReactNode;
-  task: React.ReactNode;
 }) {
   return (
     <div className="flex overflow-y-hidden no-scrollbar">
@@ -17,7 +15,6 @@ export default function UserLayout({
           {children}
         </main>
       </div>
-      {task}
     </div>
   );
 }
