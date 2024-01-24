@@ -69,15 +69,14 @@ const EditTaskModal: React.FC<Props> = ({ show, onClose, task }) => {
       if (!response.data) {
         throw new Error('Invalid credentials');
       }
-      toast.success('Task updated successfully');
-      await pauseExecution(3000);
       handleClose();
-      setIsSubmitting(false);
+      toast.success('Task updated successfully', { duration: 3000 });
       router.refresh();
     } catch (error) {
-      setIsSubmitting(false);
-      toast.error("Couldn't update task");
       console.error('Error in create task: ', error);
+      toast.error("Couldn't update task", { duration: 3000 });
+    } finally {
+      setIsSubmitting(false);
     }
   };
 

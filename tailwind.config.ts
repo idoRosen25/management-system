@@ -26,6 +26,18 @@ const config: Config = {
           800: '#1f2937',
           900: '#111827',
         },
+        blue: {
+          50: '#e6f4ff', // Lightest (teal/blue variant)
+          100: '#bae6ff',
+          200: '#91d5ff',
+          300: '#69c0ff',
+          400: '#40a9ff',
+          500: '#1a91ff', // Default blue shade
+          600: '#0e80e1',
+          700: '#0b69b0',
+          800: '#094c80',
+          900: '#03396c', // Darkest (super dark blue)
+        },
       },
     },
   },

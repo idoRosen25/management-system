@@ -1,5 +1,6 @@
 import Header from '@/components/Header';
 import Sidebar from '@/components/Sidebar';
+import { Routes } from '../../consts';
 
 export default function UserLayout({
   children,
@@ -8,7 +9,7 @@ export default function UserLayout({
 }) {
   return (
     <div className="flex overflow-y-hidden no-scrollbar">
-      <Sidebar />
+      <Sidebar route={Routes.USER} />
       <div className="w-full">
         <Header />
         <main className="h-[calc(100vh-80px)] overflow-y-auto no-scrollbar">
