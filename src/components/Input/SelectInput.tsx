@@ -17,10 +17,10 @@ const SelectInput: React.FC<Props> = ({
   items = [],
   onChange,
   selectedItemId,
-}) =>{
-    const selectedItem = useMemo(() => {
-        return items.find((item) => item.id === selectedItemId);
-        }, [items, selectedItemId]);
+}) => {
+  const selectedItem = useMemo(() => {
+    return items.find((item) => item.id === selectedItemId);
+  }, [items, selectedItemId]);
   return (
     <div className="group relative cursor-pointer py-2 border border-gray-400 rounded-lg">
       <div className="flex items-center justify-between space-x-5 bg-white pr-4">
@@ -32,13 +32,13 @@ const SelectInput: React.FC<Props> = ({
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
             viewBox="0 0 24 24"
-            stroke-width="1.5"
+            strokeWidth="1.5"
             stroke="currentColor"
             className="h-6 w-6"
           >
             <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
+              strokeLinecap="round"
+              strokeLinejoin="round"
               d="M19.5 8.25l-7.5 7.5-7.5-7.5"
             />
           </svg>
@@ -52,7 +52,9 @@ const SelectInput: React.FC<Props> = ({
             onClick={() => onChange(id)}
             className={twMerge(
               'capitalize p-3 block font-semibold text-gray-500 hover:text-black first:rounded-t-lg last:rounded-b-lg hover:bg-indigo-200',
-              id === selectedItemId ? 'bg-indigo-600 text-white hover:bg-indigo-800' : '',
+              id === selectedItemId
+                ? 'bg-indigo-600 text-white hover:bg-indigo-800'
+                : '',
             )}
           >
             {name.toLowerCase()}
