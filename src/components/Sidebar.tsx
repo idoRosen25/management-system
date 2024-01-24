@@ -4,6 +4,8 @@ import { Routes } from '../consts';
 import PlatformIcon from '../../public/logo-icon.png';
 import { getLoggedInUser } from '@/utils/auth';
 import { twMerge } from 'tailwind-merge';
+import DashboardIcon from './Icons/DashboardIcon';
+import ProfileIcon from './Icons/ProfileIcon';
 
 type Props = {
   route: Routes;
@@ -46,12 +48,17 @@ const Sidebar = ({ route }: Props) => {
                 key={key}
                 href={key}
                 className={twMerge(
-                  'p-2 rounded-md border border-gray-200 border-opacity-20 shadow-md',
+                  'flex flex-row p-2 rounded-md border border-gray-200 border-opacity-20 shadow-md',
                   key === route
                     ? 'bg-gray-400 bg-opacity-50 text-indigo-600 hover:bg-opacity-90'
                     : 'hover:bg-gray-400 hover:bg-opacity-50 hover:text-indigo-600 ',
                 )}
               >
+                {key === Routes.DASHBOARD ? (
+                  <DashboardIcon className="mr-2" />
+                ) : (
+                  <ProfileIcon className="mr-2" />
+                )}
                 <span className="text-lg font-medium capitalize">{value}</span>
               </LinkWrapper>
             ))}
