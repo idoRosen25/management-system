@@ -55,9 +55,9 @@ const Sidebar = ({ route }: Props) => {
                 )}
               >
                 {key === Routes.DASHBOARD ? (
-                  <DashboardIcon className="mr-2 bg-indigo-600" />
+                  <DashboardIcon className="mr-2 bg-indigo-600 rounded-md" />
                 ) : (
-                  <ProfileIcon className="mr-2 bg-indigo-600" />
+                  <ProfileIcon className="mr-2 bg-indigo-600 rounded-md" />
                 )}
                 <span className="text-lg font-medium capitalize">{value}</span>
               </LinkWrapper>
