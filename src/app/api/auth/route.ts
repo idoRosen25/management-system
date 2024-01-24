@@ -7,7 +7,7 @@ import jwt from 'jsonwebtoken';
 
 export async function POST(request: NextRequest) {
   try {
-    const { fullName, email, password, provider } = await request.json();
+    const { fullName, email, password, provider, role } = await request.json();
 
     const passwordHash = await bcrypt.hash(password, 10);
     const user = await prisma.user.create({
@@ -17,6 +17,16 @@ export async function POST(request: NextRequest) {
         passwordHash,
         provider,
         lastLogin: new Date(),
+        role,
+      },
+      select: {
+        id: true,
+        email: true,
+        fullName: true,
+        passwordHash: true,
+        lastLogin: true,
+        teamId: true,
+        role: true,
       },
     });
 
@@ -61,6 +71,8 @@ export async function GET(request: NextRequest) {
         fullName: true,
         passwordHash: true,
         lastLogin: true,
+        teamId: true,
+        role: true,
       },
     });
 
@@ -74,17 +86,26 @@ export async function GET(request: NextRequest) {
 
     const newLastLogin = new Date();
 
-    await prisma.user.update({
+    const lastLoginUser = await prisma.user.update({
       where: {
         id: user.id,
       },
       data: {
         lastLogin: newLastLogin,
       },
+      select: {
+        id: true,
+        email: true,
+        fullName: true,
+        passwordHash: true,
+        lastLogin: true,
+        teamId: true,
+        role: true,
+      },
     });
 
     // return the user
-    const { passwordHash, ...userData } = user;
+    const { passwordHash, ...userData } = lastLoginUser;
 
     const token = jwt.sign(
       userData,

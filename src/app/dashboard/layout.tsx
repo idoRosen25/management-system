@@ -2,13 +2,13 @@ import Header from '@/components/Header';
 import Sidebar from '@/components/Sidebar';
 import { Routes } from '../../consts';
 
-export default function DashboardLayout(props: {
+export default function DashboardLayout({
+  children,
+  task,
+}: {
   children: React.ReactNode;
   task: React.ReactNode;
 }) {
-  const { children, task, ...rest } = props;
-  console.log('props in dashbaord layout: ', rest);
-
   return (
     <div className="flex overflow-y-hidden no-scrollbar">
       <Sidebar route={Routes.DASHBOARD} />
