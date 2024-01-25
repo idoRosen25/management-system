@@ -2,8 +2,9 @@ import { Role } from '@prisma/client';
 import prisma from '../../../../lib/prismadb';
 import { setCookie } from '../../../utils/cookie';
 import jwt from 'jsonwebtoken';
+import { Routes } from '../../../consts';
 
-export const createUserInvite = async (
+export const createUserInvitePath = async (
   teamId?: string,
   email?: string,
   role?: Role,
@@ -27,5 +28,14 @@ export const createUserInvite = async (
       { expiresIn: '7d' },
     ),
   );
-  return `/invite${params.length ? `?${params}` : ''}`;
+  return `${Routes.INVITE}${params.length ? `?${params}` : ''}`;
 };
+
+// use function for body data when using SSR form elements
+export async function streamToString(stream: any) {
+  const chunks = [];
+  for await (const chunk of stream) {
+    chunks.push(chunk);
+  }
+  return Buffer.concat(chunks).toString('utf8');
+}

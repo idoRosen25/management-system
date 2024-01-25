@@ -3,7 +3,7 @@ import bcrypt from 'bcrypt';
 import { NextRequest, NextResponse } from 'next/server';
 import jwt from 'jsonwebtoken';
 import { setCookie } from '../../../utils/cookie';
-
+import { createUserInvitePath } from '../invite/utils';
 export async function POST(request: NextRequest) {
   try {
     const { fullName, email, password, provider, role, teamId } =
@@ -78,7 +78,39 @@ export async function GET(request: NextRequest) {
     });
 
     if (!user) {
-      throw new Error('User does not exist');
+      const invite = await prisma.invite.findFirst({
+        where: {
+          email,
+        },
+      });
+      if (!invite) {
+        // Currently navigate to admin team creation page.
+        // TODO: remove after desicion on uninvited users.
+        // Add error message for not invited or invitation information on login page
+
+        // throw new Error('User does not exist and wasnt invited');
+        return NextResponse.json(
+          {
+            message: 'Failed to find invitation for user',
+          },
+          { status: 404 },
+        );
+      }
+      return NextResponse.json(
+        {
+          url: `${request.nextUrl.origin}${await createUserInvitePath(invite.teamId, invite.email, invite.role)}`,
+        },
+        { status: 202 },
+      );
+    }
+
+    if (!user?.teamId) {
+      return NextResponse.json(
+        {
+          url: `${request.nextUrl.origin}${await createUserInvitePath(undefined, user.email, user.role)}`,
+        },
+        { status: 202 },
+      );
     }
     const compare = await bcrypt.compare(password, user.passwordHash);
     if (!compare) {

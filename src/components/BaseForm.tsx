@@ -30,7 +30,8 @@ const BaseForm = ({
           <Divider />
         </>
       )}
-      <div className="h-full my-4">{children}</div>
+      <div className="h-fully my-4">{children}</div>
+      <Divider />
       <div className="flex gap-4 w-full  h-fit mt-4 justify-end">
         {typeof onCancel === 'function' && (
           <Button

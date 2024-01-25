@@ -1,9 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import prisma from '../../../../lib/prismadb';
 import { Role } from '@prisma/client';
-import { setCookie } from '../../../utils/cookie';
-import jwt from 'jsonwebtoken';
-import { createUserInvite } from './utils';
+import { createUserInvitePath, streamToString } from './utils';
 
 type TeamData = {
   email?: string;
@@ -13,14 +11,6 @@ type TeamData = {
 };
 
 export async function POST(request: NextRequest) {
-  async function streamToString(stream: any) {
-    const chunks = [];
-    for await (const chunk of stream) {
-      chunks.push(chunk);
-    }
-    return Buffer.concat(chunks).toString('utf8');
-  }
-
   try {
     const { email, name, teamId, role }: TeamData = (
       await streamToString(request.body)
@@ -35,8 +25,8 @@ export async function POST(request: NextRequest) {
         };
       }, {});
 
-    if (teamId && email) {
-      const redirectPath = await createUserInvite(
+    if (teamId) {
+      const redirectPath = await createUserInvitePath(
         teamId,
         email,
         role || Role.USER,
@@ -58,7 +48,7 @@ export async function POST(request: NextRequest) {
           email: true,
         },
       });
-      const redirectPath = await createUserInvite(
+      const redirectPath = await createUserInvitePath(
         team.id,
         user?.email || email,
         role || Role.ADMIN,

@@ -4,6 +4,7 @@ export enum Routes {
   AUTH = '/auth',
   DASHBOARD = '/dashboard',
   USER = '/user',
+  INVITE = '/invite',
 }
 
 export enum Endpoints {
