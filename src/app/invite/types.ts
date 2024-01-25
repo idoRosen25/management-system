@@ -1,6 +1,9 @@
+import { Role } from '@prisma/client';
+
 export type InvitePageSearchParams = {
   teamId: string;
-  userEmail?: string;
+  email?: string;
+  role?: Role;
 };
 export type InvitePageProps = {
   params?: unknown;

@@ -5,6 +5,7 @@ import LoginForm from './LoginForm';
 import SignupForm from './SignupForm';
 import { useRouter } from 'next/navigation';
 import { Routes } from '../../consts';
+import { Role } from '@prisma/client';
 
 type Props = {
   isLoggedIn: boolean;
@@ -18,7 +19,7 @@ const AuthForm = ({ isLoggedIn }: Props) => {
   const [isLogin, setIsLogin] = useState(true);
   return (
     <div className="bg-white border border-gray-500 w-[25rem] m-auto p-6 rounded-lg shdow-sm">
-      {isLogin ? <LoginForm /> : <SignupForm />}
+      {isLogin ? <LoginForm /> : <SignupForm teamId="" role={Role.ADMIN} />}
       <Divider className="mt-4 mb-2" />
       <span className="text-sm text-black">
         {!isLogin ? 'Already have an account? ' : 'Do not have an acount yet? '}

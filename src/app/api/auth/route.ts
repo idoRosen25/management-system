@@ -1,13 +1,13 @@
 import prisma from '../../../../lib/prismadb';
 import bcrypt from 'bcrypt';
-import { subMinutes } from 'date-fns';
 import { NextRequest, NextResponse } from 'next/server';
-import { cookies } from 'next/headers';
 import jwt from 'jsonwebtoken';
+import { setCookie } from '../../../utils/cookie';
 
 export async function POST(request: NextRequest) {
   try {
-    const { fullName, email, password, provider, role } = await request.json();
+    const { fullName, email, password, provider, role, teamId } =
+      await request.json();
 
     const passwordHash = await bcrypt.hash(password, 10);
     const user = await prisma.user.create({
@@ -18,6 +18,7 @@ export async function POST(request: NextRequest) {
         provider,
         lastLogin: new Date(),
         role,
+        teamId,
       },
       select: {
         id: true,
@@ -38,7 +39,7 @@ export async function POST(request: NextRequest) {
       { expiresIn: '7d' },
     );
 
-    cookies().set('access_token', token);
+    setCookie('access_token', token);
 
     return NextResponse.json(userData);
   } catch (error) {
@@ -113,7 +114,7 @@ export async function GET(request: NextRequest) {
       { expiresIn: '7d' },
     );
     // return the user
-    cookies().set('access_token', token);
+    setCookie('access_token', token);
 
     return NextResponse.json(userData, {
       status: 200,

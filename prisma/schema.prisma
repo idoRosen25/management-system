@@ -41,6 +41,7 @@ model User {
   role          Role           @default(ADMIN)
   teamId        String?        @map("team_id")
   team          Team?          @relation(fields: [teamId], references: [id])
+  invite        Invite?
 
   @@index([teamId])
   @@index([email])
@@ -107,4 +108,14 @@ model Wrokspace {
   @@index([name])
   @@index([teamId])
   @@map("workspaces")
+}
+
+model Invite {
+  email  String @unique @db.VarChar(1024)
+  user   User   @relation(fields: [email], references: [email])
+  role   Role   @default(USER)
+  teamId String @map("team_id")
+
+  @@id([email, teamId])
+  @@map("invites")
 }
