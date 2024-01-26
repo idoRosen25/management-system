@@ -7,11 +7,17 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import FormInput from '@/components/Input/FormInput';
 import BaseForm from '../BaseForm';
 import { axios } from '../../utils/axios';
-import { Provider } from '@prisma/client';
+import { Provider, Role } from '@prisma/client';
 import { useRouter } from 'next/navigation';
 
 type FormData = z.infer<typeof signupSchema>;
-const SignupForm = () => {
+
+type Props = {
+  teamId: string;
+  userEmail?: string;
+  role?: Role;
+};
+const SignupForm: React.FC<Props> = ({ teamId, userEmail, role }) => {
   const router = useRouter();
   const {
     handleSubmit,
@@ -19,6 +25,9 @@ const SignupForm = () => {
     formState: { errors, isValid, isDirty },
   } = useForm<FormData>({
     resolver: zodResolver(signupSchema),
+    defaultValues: {
+      email: userEmail || '',
+    },
   });
 
   const onSubmit: SubmitHandler<FormData> = async (data) => {
@@ -27,7 +36,12 @@ const SignupForm = () => {
     try {
       const response = await axios.post(
         Endpoints.AUTH,
-        JSON.stringify({ ...data, provider: data.provider || Provider.EMAIL }),
+        JSON.stringify({
+          ...data,
+          provider: data.provider || Provider.EMAIL,
+          role,
+          teamId,
+        }),
         {
           headers: {
             'Content-Type': 'application/json',

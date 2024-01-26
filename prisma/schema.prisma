@@ -20,8 +20,15 @@ enum TaskStatus {
   DONE
 }
 
+enum Role {
+  ADMIN
+  OWNER
+  USER
+}
+
 model User {
   id            String         @id() @default(uuid())
+  isDeleted     Boolean        @default(false) @map("is_deleted")
   fullName      String         @db.VarChar(1024)
   email         String         @unique
   passwordHash  String         @map("password_hash") @db.VarChar(256)
@@ -31,8 +38,14 @@ model User {
   provider      Provider
   tasks         Task[]
   assignedTasks AssignedTask[]
+  role          Role           @default(ADMIN)
+  teamId        String?        @map("team_id")
+  team          Team?          @relation(fields: [teamId], references: [id])
+  invite        Invite?
 
+  @@index([teamId])
   @@index([email])
+  @@map("users")
 }
 
 model AssignedTask {
@@ -47,10 +60,12 @@ model AssignedTask {
   @@unique([taskId, assigneeEmail])
   @@index([taskId])
   @@index([assigneeEmail])
+  @@map("assigned_tasks")
 }
 
 model Task {
   id           String        @id() @default(uuid())
+  isDeleted    Boolean       @default(false) @map("is_deleted")
   title        String        @db.VarChar(1024)
   description  String        @db.VarChar(4096)
   status       TaskStatus    @default(PENDING)
@@ -59,7 +74,48 @@ model Task {
   creatorEmail String        @map("creator_email")
   creator      User          @relation(fields: [creatorEmail], references: [email])
   assignedTo   AssignedTask?
+  workspaceId  String?       @map("workspace_id")
+  workspace    Wrokspace?    @relation(fields: [workspaceId], references: [id])
 
   @@index([creatorEmail])
   @@index([status])
+  @@map("tasks")
+}
+
+model Team {
+  id         String      @id() @default(uuid())
+  isDeleted  Boolean     @default(false) @map("is_deleted")
+  name       String      @db.VarChar(1024)
+  createdAt  DateTime    @default(now()) @map("crated_at")
+  updatedAt  DateTime    @updatedAt @map("updated_at")
+  users      User[]
+  workspaces Wrokspace[]
+
+  @@map("teams")
+}
+
+model Wrokspace {
+  id        String   @id() @default(uuid())
+  isDeleted Boolean  @default(false) @map("is_deleted")
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+  name      String   @db.VarChar(1024)
+  icon      String?  @db.VarChar(1024)
+  teamId    String   @map("team_id")
+  team      Team     @relation(fields: [teamId], references: [id])
+  tasks     Task[]
+
+  @@index([name])
+  @@index([teamId])
+  @@map("workspaces")
+}
+
+model Invite {
+  email  String @unique @db.VarChar(1024)
+  user   User   @relation(fields: [email], references: [email])
+  role   Role   @default(USER)
+  teamId String @map("team_id")
+
+  @@id([email, teamId])
+  @@map("invites")
 }

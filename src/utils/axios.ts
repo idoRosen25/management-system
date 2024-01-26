@@ -38,9 +38,12 @@ export const getAxiosErrorMessage = (err: AxiosError) => {
   );
 };
 
-export function pauseExecution(milliseconds: number) {
-  return new Promise((resolve) => {
-    setTimeout(resolve, milliseconds);
+export function pauseExecution(
+  milliseconds: number,
+  withError: boolean = false,
+) {
+  return new Promise((resolve, error) => {
+    setTimeout(withError ? error : resolve, milliseconds);
   });
 }
 

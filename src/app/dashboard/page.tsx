@@ -6,9 +6,9 @@ import TaskColumnLoader from '../../components/Tasks/TaskColumnLoader';
 export default function Dashbaord() {
   return (
     <section>
-      <div className="bg-blue-700 bg-opacity-60 py-6">
-        <div className="w-full mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-3 gap-6 bg-transparent">
+      <div className="bg-blue-700 bg-opacity-60 py-6 h-[calc(100vh-80px)]">
+        <div className="w-full mx-auto px-4 sm:px-6 lg:px-8 h-full">
+          <div className="grid grid-cols-3 gap-6 bg-transparent h-full">
             {Object.values(TaskStatus).map((status, index) => (
               <Suspense
                 key={`suspence_task_status_${status}`}

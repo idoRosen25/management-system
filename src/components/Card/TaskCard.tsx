@@ -1,10 +1,10 @@
-import { Task, User } from '@prisma/client';
 import Link from 'next/link';
 import { Routes } from '../../consts';
 import { format } from 'date-fns';
+import { TaskCardData } from '../../types';
 
 type Props = {
-  task: Task & { creator: User };
+  task: TaskCardData;
 };
 const TaskCard: React.FC<Props> = ({ task }) => {
   if (!task) {

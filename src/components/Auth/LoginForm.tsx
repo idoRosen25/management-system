@@ -10,6 +10,7 @@ import { useState } from 'react';
 import { axios } from '../../utils/axios';
 import { Provider } from '@prisma/client';
 import { useRouter } from 'next/navigation';
+import toast from 'react-hot-toast';
 
 type FormData = z.infer<typeof loginSchema>;
 const LoginForm = () => {
@@ -42,9 +43,15 @@ const LoginForm = () => {
         throw new Error('Invalid credentials');
       }
 
+      if (response?.status === 202) {
+        toast.success('Please create a team');
+        router.replace(response.data.url, { scroll: true });
+        return;
+      }
       router.replace(Routes.DASHBOARD, { scroll: true });
     } catch (error) {
       console.error('Error in login: ', error);
+      toast.error('Failed to find login data');
     }
     setTimeout(() => setIsSubmitting(false), 500);
   };

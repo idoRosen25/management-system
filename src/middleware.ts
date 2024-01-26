@@ -8,7 +8,7 @@ export const config = {
 
 export function middleware(request: NextRequest) {
   if (!isAuthenticated()) {
-    if (request.url.includes(Routes.AUTH)) {
+    if (request.url.includes(Routes.AUTH) || request.url.includes('/invite')) {
       return NextResponse.next();
     }
     return NextResponse.redirect(new URL(Routes.AUTH, request.url));
