@@ -1,8 +1,4 @@
 /** @type {import('next').NextConfig} */
-const nextConfig = {
-  headers: {
-    'Content-Type': 'application/json',
-  },
-};
+const nextConfig = {};
 
 module.exports = nextConfig;
