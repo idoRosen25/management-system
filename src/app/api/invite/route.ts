@@ -40,20 +40,13 @@ export async function POST(request: NextRequest) {
         role || Role.USER,
       );
 
-      const inviteResponse = await SendInviteEmail(
+      await SendInviteEmail(
         user?.fullName || '',
         user?.email || email,
         `${request.nextUrl.origin}${redirectPath}`,
         'You are invite to OctoManage',
       );
-      const { data, error } = inviteResponse || {};
-      if (!data || error) {
-        throw new Error(error?.toString() || '');
-      }
-
-      return NextResponse.redirect(
-        `${request.nextUrl.origin}/invite/${data?.id}`,
-      );
+      return NextResponse.redirect(`${request.nextUrl.origin}${redirectPath}`);
     }
 
     if (email && name) {
@@ -67,20 +60,13 @@ export async function POST(request: NextRequest) {
         user?.email || email,
         role || Role.ADMIN,
       );
-      const inviteResponse = await SendInviteEmail(
+      await SendInviteEmail(
         user?.fullName || '',
         user?.email || email,
         `${request.nextUrl.origin}${redirectPath}`,
         'You are invite to OctoManage',
       );
-      const { data, error } = inviteResponse || {};
-      if (!data || error) {
-        throw new Error(error?.toString() || '');
-      }
-
-      return NextResponse.redirect(
-        `${request.nextUrl.origin}/invite/${data?.id}`,
-      );
+      return NextResponse.redirect(`${request.nextUrl.origin}${redirectPath}`);
     }
 
     return NextResponse.redirect(`${request.nextUrl.origin}/invite`);
