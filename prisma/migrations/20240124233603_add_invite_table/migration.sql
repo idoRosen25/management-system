@@ -12,3 +12,5 @@ CREATE UNIQUE INDEX "invites_email_key" ON "invites"("email");
 
 -- AddForeignKey
 ALTER TABLE "invites" ADD CONSTRAINT "invites_email_fkey" FOREIGN KEY ("email") REFERENCES "users"("email") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+ALTER TABLE "invites" ALTER COLUMN "role" SET DEFAULT 'USER';
