@@ -26,3 +26,13 @@ export type TaskCardData = {
   creator: User;
   assignedTo?: User;
 };
+
+export enum EmailSendType {
+  INVITE = 'invite',
+  RESET_PASSWORD = 'reset_password',
+}
+
+export type InviteEmailProps = {
+  fullName: string;
+  inviteLink: string;
+};
