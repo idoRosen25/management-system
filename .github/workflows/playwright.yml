@@ -19,6 +19,8 @@ jobs:
         run: npx playwright install --with-deps
       - name: Build Docker image
         run: npm run docker:local:up
+      - name: Run Docker image
+        run: docker run -d -p 5432:5432 --name playwright-test-app playwright-test-app
       - name: Build
         run: npm run build
       - name: Run Playwright tests
