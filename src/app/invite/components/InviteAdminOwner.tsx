@@ -56,6 +56,7 @@ const InviteAdminOwner = ({ email, role }: { email?: string; role: Role }) => {
 
         <button
           type="submit"
+          name="createTeam"
           className="mt-6 w-fit px-4 py-2 rounded-lg bg-indigo-600 hover:bg-indigo-800 text-white font-medium"
         >
           Submit
