@@ -5,6 +5,7 @@ export const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 export const SenderString = process.env.VERCEL_EMAIL_SENDER as string;
 
 const apiKey = process.env.VERCEL_EMAIL_API_KEY;
+export const baseURL = 'http://localhost:3000';
 
 export const Resend = new EmailSender('' + apiKey);
 
