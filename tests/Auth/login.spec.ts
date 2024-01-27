@@ -28,7 +28,7 @@ test('create a team test', async ({ page }) => {
   // await page.waitForURL(Routes.DASHBOARD);
   // expect(page.url()).toBe(baseURL + Routes.DASHBOARD);
   await page.goto(Routes.INVITE);
-  await page.getByPlaceholder('admin Email').fill('may74@gmail.com');
+  await page.getByPlaceholder('admin Email').fill('test@test.com');
   await page.getByPlaceholder('Team Name').fill('test');
   await prisma.team.findMany().then((teams) => {
     teamsLen = teams.length;
@@ -47,7 +47,7 @@ test('create a team test', async ({ page }) => {
     baseURL +
       Routes.INVITE +
       '?email=' +
-      'may74@gmail.com' +
+      'test@test.com' +
       '&teamId=' +
       team[team.length - 1].id +
       '&role=ADMIN',
