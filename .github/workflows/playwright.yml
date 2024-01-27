@@ -12,7 +12,7 @@ jobs:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
         with:
-          node-version: 18
+          node-version: 20
       - name: Install dependencies
         run: npm ci
       - name: Install Playwright Browsers
@@ -20,7 +20,7 @@ jobs:
       - name: Build Docker image
         run: npm run docker:local:up
       - name: Run Docker image
-        run: docker run -d -p 5432:5432 --name playwright-test-app playwright-test-app
+        run: docker run -d -p 5432:5432 --name management-system_db_1 management-system_db_1
       - name: Build
         run: npm run build
       - name: Run Playwright tests
