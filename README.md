@@ -23,13 +23,13 @@ npm run storybook
 Tests using Playwright:
 
 ```bash
-npx npx playwright test
+npx playwright test
 ```
 
 Tests using Playwright with ui:
 
 ```bash
-npx npx playwright test --ui
+npx playwright test --ui
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
