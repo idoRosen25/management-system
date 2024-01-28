@@ -23,6 +23,12 @@ npm run storybook
 Tests using Playwright with ui:
 
 ```bash
+npm run test:ui
+```
+
+Tests using Playwright:
+
+```bash
 npm run test
 ```
 
