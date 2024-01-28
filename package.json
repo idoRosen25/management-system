@@ -12,7 +12,6 @@
     "prisma:generate": "npx prisma generate",
     "prisma:validate": "npx prisma validate",
     "migrate:postgres": "prisma migrate dev",
-    "migrate:dev": "dotenv -e .env.local prisma migrate dev",
     "migrate:reset": "prisma migrate reset --force",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build"
@@ -54,6 +53,8 @@
     "@types/react": "^18",
     "@types/react-dom": "^18",
     "autoprefixer": "^10.0.1",
+    "dotenv": "^16.4.1",
+    "dotenv-cli": "^7.3.0",
     "eslint": "^8",
     "eslint-config-next": "14.0.4",
     "eslint-plugin-storybook": "^0.6.15",
