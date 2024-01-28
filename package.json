@@ -9,7 +9,7 @@
     "format": "npx prettier --write .",
     "lint": "next lint",
     "docker:local:up": "docker-compose --profile local up -d",
-    "prisma:generate": "npx prisma generate",
+    "prisma:generate": "dotenv -e .env.local -- npx prisma generate",
     "prisma:validate": "npx prisma validate",
     "migrate:postgres": "prisma migrate dev",
     "migrate:reset": "prisma migrate reset --force",
