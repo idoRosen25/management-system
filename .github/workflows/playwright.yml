@@ -1,4 +1,4 @@
-name: push
+name: Playwright
 on:
   push:
     branches: [main, master]
