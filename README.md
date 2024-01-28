@@ -20,16 +20,10 @@ for Stroybook:
 npm run storybook
 ```
 
-Tests using Playwright:
-
-```bash
-npx playwright test
-```
-
 Tests using Playwright with ui:
 
 ```bash
-npx playwright test --ui
+npm run test
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
