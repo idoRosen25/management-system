@@ -1,6 +1,5 @@
 import { Routes, baseURL } from '@/consts';
 import { test, expect } from '@playwright/test';
-import prisma from '../../lib/prismadb';
 import { pauseExecution } from '@/utils/axios';
 
 test.beforeEach(async ({ page }) => {
