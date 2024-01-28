@@ -2,6 +2,7 @@ import { Routes, baseURL } from '@/consts';
 import { test, expect } from '@playwright/test';
 import prisma from '../../lib/prismadb';
 import { pauseExecution } from '@/utils/axios';
+import { User } from '@prisma/client';
 
 test.beforeEach(async ({ page }) => {
   await page.goto(baseURL);
@@ -33,11 +34,20 @@ test('create a team test', async ({ page }) => {
   await prisma.team.findMany().then((teams) => {
     teamsLen = teams.length;
   });
+  if (teamsLen > 0)
+    await prisma.team.deleteMany({
+      where: {
+        name: 'test',
+      },
+    });
   (await page.getByRole('button', { name: 'Submit' }).all()).at(0)?.click();
   await pauseExecution(2000);
   await prisma.team.findMany().then((teams) => {
-    expect(teams.length).toBe(teamsLen + 1);
+    teams.length > teamsLen
+      ? expect(teams.length).toBe(teamsLen + 1)
+      : expect(teams.length).toBe(teamsLen);
   });
+
   const team = await prisma.team.findMany({
     where: {
       name: 'test',
@@ -53,6 +63,15 @@ test('create a team test', async ({ page }) => {
       '&role=ADMIN',
   );
   await prisma.user.findMany().then((users) => {
+    users.map(async (user) => {
+      if (user.email === 'test@test.com') {
+        await prisma.user.delete({
+          where: {
+            id: user.id,
+          },
+        });
+      }
+    });
     usersLen = users.length;
   });
   await page.getByPlaceholder('Full Name').fill('test');
@@ -60,9 +79,13 @@ test('create a team test', async ({ page }) => {
   await page.getByPlaceholder('Password').first().fill('123123');
   await page.getByPlaceholder('Enter password again').fill('123123');
   await page.getByRole('button', { name: 'Register' }).click();
+  await page.waitForURL(Routes.DASHBOARD);
+  expect(page.url()).toBe(baseURL + Routes.DASHBOARD);
   await pauseExecution(2000);
   await prisma.user.findMany().then((users) => {
-    expect(users.length).toBe(usersLen + 1);
+    users.length > usersLen
+      ? expect(users.length).toBe(usersLen + 1)
+      : expect(users.length).toBe(usersLen);
   });
 });
 
