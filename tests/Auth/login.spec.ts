@@ -2,13 +2,12 @@ import { Routes, baseURL } from '@/consts';
 import { test, expect } from '@playwright/test';
 import prisma from '../../lib/prismadb';
 import { pauseExecution } from '@/utils/axios';
-import { User } from '@prisma/client';
 
 test.beforeEach(async ({ page }) => {
   await page.goto(baseURL);
 });
 
-test('login test', async ({ page }) => {
+test('login test without signup', async ({ page }) => {
   // Expect a title "to contain" a substring.
   await page.getByPlaceholder('Email').fill('may74@gmail.com');
   await page.getByPlaceholder('Password').fill('123123');
@@ -20,14 +19,9 @@ test('login test', async ({ page }) => {
   );
 });
 
-test('create a team test', async ({ page }) => {
+test('create a team,signup and login test', async ({ page }) => {
   var teamsLen = 0;
   var usersLen = 0;
-  // await page.getByPlaceholder('Email').fill('may74@gmail.com');
-  // await page.getByPlaceholder('Password').fill('123123');
-  // await page.getByRole('button', { name: 'Log in' }).click();
-  // await page.waitForURL(Routes.DASHBOARD);
-  // expect(page.url()).toBe(baseURL + Routes.DASHBOARD);
   await page.goto(Routes.INVITE);
   await page.getByPlaceholder('admin Email').fill('test@test.com');
   await page.getByPlaceholder('Team Name').fill('test');
