@@ -17,14 +17,18 @@ jobs:
         run: npm ci
       - name: Install Playwright Browsers
         run: npx playwright install --with-deps
-      - name: Run Docker image
-        run: docker run -d -p 5432:5432 --name management-system-db-1 postgres:13
+      # - name: Run Docker image
+      #   run: docker run -d -p 5432:5432 --name management-system-db-1 postgres:13
       - name: Prisma migrate dev
         run: npm run migrate:dev
-      - name: Build
-        run: npm run build
+      # - name: Build
+      #   run: npm run build
+      - name: Load environment variables
+        run: npx dotenv -e .env.local
       - name: Run Playwright tests
         run: npx playwright test
+      - name: Run Prisma migrations
+        run: npx prisma migrate dev
         env:
           CI: true
       - uses: actions/upload-artifact@v3
