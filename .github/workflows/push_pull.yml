@@ -22,7 +22,7 @@ jobs:
       - name: Build
         run: npm run build
       - name: Run Playwright tests
-        run: npx playwright test --workers=5 --headless
+        run: npx playwright test --workers=5
         env:
           CI: true
       - uses: actions/upload-artifact@v3
