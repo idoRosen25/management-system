@@ -2,7 +2,7 @@ name: deploy
 on:
   deployment_status:
 jobs:
-  test:
+  deploy:
     timeout-minutes: 60
     runs-on: ubuntu-latest
     if: github.event.deployment_status.state == 'success'
@@ -16,6 +16,6 @@ jobs:
       - name: Install Playwright
         run: npx playwright install --with-deps
       - name: Run Playwright tests
-        run: npx playwright test
+        run: npx playwright test --workers=5 --headless
         env:
           PLAYWRIGHT_TEST_BASE_URL: ${{ github.event.deployment_status.target_url }}

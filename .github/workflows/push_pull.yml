@@ -5,7 +5,7 @@ on:
   pull_request:
     branches: [main, master]
 jobs:
-  test:
+  push:
     timeout-minutes: 60
     runs-on: ubuntu-latest
     steps:
@@ -24,7 +24,7 @@ jobs:
       - name: Run Prisma migrations
         run: npm run migrate:dev
       - name: Run Playwright tests
-        run: npx playwright test
+        run: npx playwright test --workers=5 --headless
         env:
           CI: true
       - uses: actions/upload-artifact@v3
