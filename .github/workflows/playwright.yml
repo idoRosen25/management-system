@@ -33,6 +33,7 @@ jobs:
           path: playwright-report/
           retention-days: 30
   deploy:
+    needs: push
     timeout-minutes: 60
     runs-on: ubuntu-latest
     if: github.event.deployment_status.state == 'success'
