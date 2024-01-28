@@ -19,6 +19,8 @@ jobs:
         run: npx playwright install --with-deps
       - name: Run Docker image
         run: docker run -d -p 5432:5432 --name management-system-db-1 postgres:13
+      - name: Prisma generate
+        run: npm run prisma:generate
       - name: postgres migrate
         run: npm run migrate:postgres
       - name: Build
