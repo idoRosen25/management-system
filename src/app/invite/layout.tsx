@@ -7,9 +7,10 @@ export default async function Layout(props: {
   user: React.ReactNode;
 }) {
   const user = await getLoggedInUser();
+
   return (
     <main className="w-screen h-screen flex gap-4 bg-indigo-700 bg-opacity-80 items-center justify-center">
-      {!user ? (
+      {!user || (user && user.role) ? (
         props.children
       ) : user.role === Role.ADMIN ? (
         <div className="w-full h-full divide-x-1 flex flex-col lg:flex-row">
