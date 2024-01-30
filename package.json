@@ -33,6 +33,7 @@
     "react-hot-toast": "^2.4.1",
     "react-query": "^3.39.3",
     "react-transition-group": "^4.4.5",
+    "resend": "^3.1.0",
     "tailwind-merge": "^2.2.0",
     "zod": "^3.22.4"
   },

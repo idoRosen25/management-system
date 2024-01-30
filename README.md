@@ -13,7 +13,9 @@ pnpm dev
 # or
 bun dev
 ```
+
 for Stroybook:
+
 ```bash
 npm run storybook
 ```
@@ -53,6 +55,8 @@ VERCEL_GIT_REPO_ID=""
 VERCEL_GIT_REPO_OWNER=""
 VERCEL_GIT_REPO_SLUG=""
 VERCEL_URL=""
+VERCEL_EMAIL_API_KEY="<YOUR_API_KEY_FROM_RESEND>"
+VERCEL_EMAIL_SENDER="<YOUR_EMAIL_SENDER_TITLE>"
 
 NEXT_PUBLIC_API_URL="http://localhost:3000/api"
 NEXT_PUBLIC_JWT_SECRET="secret"
@@ -66,6 +70,12 @@ To learn more about Next.js, take a look at the following resources:
 - [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
 
 You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+
+To learn more about the email sending mechanism check out the following links:
+[Resend with NextJS](https://resend.com/docs/send-with-nextjs) - show simple resend overview with nextJS
+[Resend overview docs](https://resend.com/overview) - Resend docs overview page
+
+make sure you are not missing the needed env vars
 
 ## Deploy on Vercel
 

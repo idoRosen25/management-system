@@ -12,8 +12,11 @@ import { Provider } from '@prisma/client';
 import { useRouter } from 'next/navigation';
 import toast from 'react-hot-toast';
 
+type Props = {
+  email?: string;
+};
 type FormData = z.infer<typeof loginSchema>;
-const LoginForm = () => {
+const LoginForm: React.FC<Props> = ({ email = '' }) => {
   const router = useRouter();
   const {
     handleSubmit,
@@ -21,6 +24,9 @@ const LoginForm = () => {
     formState: { errors, isValid, isDirty },
   } = useForm<FormData>({
     resolver: zodResolver(loginSchema),
+    defaultValues: {
+      email,
+    },
   });
 
   const [isSubmitting, setIsSubmitting] = useState(false);

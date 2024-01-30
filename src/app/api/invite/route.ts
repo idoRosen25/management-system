@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import prisma from '../../../../lib/prismadb';
 import { Role } from '@prisma/client';
 import { createUserInvitePath, streamToString } from './utils';
+import { SendInviteEmail } from '../../../api/email';
 
 type TeamData = {
   email?: string;
@@ -25,13 +26,35 @@ export async function POST(request: NextRequest) {
         };
       }, {});
 
-    if (teamId) {
+    const user = await prisma.user.findFirst({
+      where: { email },
+      select: {
+        fullName: true,
+        email: true,
+      },
+    });
+
+    if (teamId && email) {
       const redirectPath = await createUserInvitePath(
         teamId,
         email,
         role || Role.USER,
       );
-      return NextResponse.redirect(`${request.nextUrl.origin}${redirectPath}`);
+
+      const inviteResponse = await SendInviteEmail(
+        user?.fullName || '',
+        user?.email || email,
+        `${request.nextUrl.origin}${redirectPath}`,
+        'You are invite to OctoManage',
+      );
+      const { data, error } = inviteResponse || {};
+      if (!data || error) {
+        throw new Error(error?.toString() || '');
+      }
+
+      return NextResponse.redirect(
+        `${request.nextUrl.origin}/invite/${data?.id}`,
+      );
     }
 
     if (email && name) {
@@ -40,20 +63,25 @@ export async function POST(request: NextRequest) {
           name,
         },
       });
-      const user = await prisma.user.findFirst({
-        where: {
-          email,
-        },
-        select: {
-          email: true,
-        },
-      });
       const redirectPath = await createUserInvitePath(
         team.id,
         user?.email || email,
         role || Role.ADMIN,
       );
-      return NextResponse.redirect(`${request.nextUrl.origin}${redirectPath}`);
+      const inviteResponse = await SendInviteEmail(
+        user?.fullName || '',
+        user?.email || email,
+        `${request.nextUrl.origin}${redirectPath}`,
+        'You are invite to OctoManage',
+      );
+      const { data, error } = inviteResponse || {};
+      if (!data || error) {
+        throw new Error(error?.toString() || '');
+      }
+
+      return NextResponse.redirect(
+        `${request.nextUrl.origin}/invite/${data?.id}`,
+      );
     }
 
     return NextResponse.redirect(`${request.nextUrl.origin}/invite`);
