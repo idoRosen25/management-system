@@ -19,7 +19,16 @@ export const createUserInvitePath = async (
   if (role) {
     params = `${params}&role=${role}`;
   }
-
+  let invite;
+  if (email && teamId && role) {
+    invite = await prisma.invite.create({
+      data: {
+        email,
+        teamId,
+        role,
+      },
+    });
+  }
   setCookie(
     'access_token',
     jwt.sign(
@@ -28,7 +37,7 @@ export const createUserInvitePath = async (
       { expiresIn: '7d' },
     ),
   );
-  return `${Routes.INVITE}${params.length ? `?${params}` : ''}`;
+  return { url: `${Routes.INVITE}${params.length ? `?${params}` : ''}` };
 };
 
 // use function for body data when using SSR form elements

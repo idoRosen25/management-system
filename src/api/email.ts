@@ -1,17 +1,18 @@
-import { Role } from '@prisma/client';
-import { Resend, SenderString } from '../consts';
 import { InviteEmailTemplate } from '@/components/Emails/invite-email-template';
-import { createUserInvitePath } from '../app/api/invite/utils';
+import { Resend } from 'resend';
+import { CreateEmailResponse } from '../types';
 
+const resend = new Resend(process.env.VERCEL_EMAIL_API_KEY);
+const SenderString = process.env.VERCEL_EMAIL_SENDER as string;
 export const SendInviteEmail = async (
   fullName: string,
   email: string,
   url: string,
   subject: string,
-) => {
+): Promise<CreateEmailResponse | null> => {
   try {
     // TODO: change from address to actual platform email - need to purchasedomain. currently not developed
-    const { data } = await Resend.emails.send({
+    const sendResponse = await resend.emails.send({
       from: SenderString,
       to: [email],
       subject,
@@ -24,9 +25,8 @@ export const SendInviteEmail = async (
       }),
     });
 
-    // if email was sent successfully, data will contain field id for the request id in Resend dashboard.
-    return data?.id;
+    return sendResponse;
   } catch (error) {
-    return error;
+    return null;
   }
 };
