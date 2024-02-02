@@ -92,6 +92,11 @@ const LoginForm: React.FC<Props> = ({ email = '' }) => {
           {...register('password', { required: 'Password is required' })}
         />
       </section>
+      <div className="flex justify-start">
+        <a href={Routes.INVITE} className="text-blue-500">
+          Don't have a team?
+        </a>
+      </div>
     </BaseForm>
   );
 };
