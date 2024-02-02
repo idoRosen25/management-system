@@ -36,7 +36,7 @@ const EditTaskModal: React.FC<Props> = ({ show, onClose, task }) => {
     defaultValues: {
       title: task?.title,
       description: task?.description,
-      assigneeEmail: task?.assignedTo?.assignee.email,
+      assigneeEmail: task?.assignedTo?.assignee?.email,
       status: task?.status,
     },
   });
