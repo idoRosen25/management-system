@@ -93,7 +93,7 @@ const LoginForm: React.FC<Props> = ({ email = '' }) => {
         />
       </section>
       <div className="flex justify-start">
-        <a href={Routes.INVITE} className="text-blue-500">
+        <a href={Routes.INVITE} className="text-blue-500 ml-2">
           Don't have a team?
         </a>
       </div>
