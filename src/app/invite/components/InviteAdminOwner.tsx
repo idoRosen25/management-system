@@ -1,3 +1,4 @@
+'use client';
 import { Role } from '@prisma/client';
 import { twMerge } from 'tailwind-merge';
 
@@ -53,7 +54,13 @@ const InviteAdminOwner = ({ email, role }: { email?: string; role: Role }) => {
             className="border border-gray-400 rounded-md py-1 px-2 text-sm"
           />
         </div>
-
+        <button
+          type="button"
+          onClick={() => window.history.back()}
+          className="flex-row mr-4 mt-6 w-fit px-4 py-2 rounded-lg bg-red-600 hover:bg-red-800 text-white font-medium"
+        >
+          Cancel
+        </button>
         <button
           type="submit"
           className="mt-6 w-fit px-4 py-2 rounded-lg bg-indigo-600 hover:bg-indigo-800 text-white font-medium"
