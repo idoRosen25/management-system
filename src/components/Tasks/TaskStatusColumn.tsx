@@ -7,7 +7,6 @@ import { TaskCardData } from '../../types';
 async function TaskStatusColumn({ status }: { status: TaskStatus }) {
   const tasks = await getTasks(status);
   const currentWorkspace = await getCurrentWorkspace();
-  console.log('currentWorkspace', currentWorkspace);
 
   return (
     <div className="flex flex-col rounded-md border border-gray-400 shadow-sm h-full">

@@ -4,7 +4,6 @@ import prisma from '../../../../lib/prismadb';
 export async function POST(request: NextRequest) {
   try {
     const { name, user } = await request.json();
-    console.log('user', user);
 
     const workspace = await prisma.workspace.create({
       data: {
