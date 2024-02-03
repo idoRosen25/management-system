@@ -12,6 +12,8 @@
     "prisma:generate": "npx prisma generate",
     "prisma:validate": "npx prisma validate",
     "migrate:postgres": "prisma migrate dev",
+    "test": "npx playwright test",
+    "test:ui": "npx playwright test --ui",
     "migrate:reset": "prisma migrate reset --force",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build"
@@ -38,6 +40,7 @@
     "zod": "^3.22.4"
   },
   "devDependencies": {
+    "@playwright/test": "^1.41.2",
     "@storybook/addon-essentials": "^7.6.10",
     "@storybook/addon-interactions": "^7.6.10",
     "@storybook/addon-links": "^7.6.10",
