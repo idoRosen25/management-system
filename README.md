@@ -1,7 +1,7 @@
-![Vercel](https://vercelbadge.vercel.app/api/idoRosen25/management-system)
-![GitHub contributors](https://img.shields.io/github/contributors/idoRosen25/management-system)
-
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+<div align="center">
+<img alt="vercel" src="https://vercelbadge.vercel.app/api/idoRosen25/management-system">
+<img alt="contributors" src="https://img.shields.io/github/contributors/idoRosen25/management-system">
+</div>
 
 ## Getting Started
 
