@@ -20,6 +20,18 @@ for Stroybook:
 npm run storybook
 ```
 
+Tests using Playwright with ui:
+
+```bash
+npm run test:ui
+```
+
+Tests using Playwright:
+
+```bash
+npm run test
+```
+
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
 You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
