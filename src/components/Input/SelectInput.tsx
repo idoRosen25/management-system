@@ -17,15 +17,15 @@ const SelectInput: React.FC<Props> = ({
   items = [],
   onChange,
   selectedItemId,
-}) =>{
-    const selectedItem = useMemo(() => {
-        return items.find((item) => item.id === selectedItemId);
-        }, [items, selectedItemId]);
+}) => {
+  const selectedItem = useMemo(() => {
+    return items.find((item) => item.id === selectedItemId);
+  }, [items, selectedItemId]);
   return (
     <div className="group relative cursor-pointer py-2 border border-gray-400 rounded-lg">
       <div className="flex items-center justify-between space-x-5 bg-white pr-4">
         <a className="capitalize menu-hover py-2 text-base font-medium text-black lg:mx-4">
-          {selectedItem?.name.toLowerCase() || title}
+          {selectedItem?.name?.toLowerCase() || title}
         </a>
         <span>
           <svg
@@ -52,7 +52,9 @@ const SelectInput: React.FC<Props> = ({
             onClick={() => onChange(id)}
             className={twMerge(
               'capitalize p-3 block font-semibold text-gray-500 hover:text-black first:rounded-t-lg last:rounded-b-lg hover:bg-indigo-200',
-              id === selectedItemId ? 'bg-indigo-600 text-white hover:bg-indigo-800' : '',
+              id === selectedItemId
+                ? 'bg-indigo-600 text-white hover:bg-indigo-800'
+                : '',
             )}
           >
             {name.toLowerCase()}

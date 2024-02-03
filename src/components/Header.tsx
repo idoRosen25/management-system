@@ -1,12 +1,12 @@
 import CreateTaskButton from '@/components/Button/CreateTaskButton';
 import LogoutButton from './Button/LogoutButton/LogoutButton';
 import CreateWorkSpaceButton from './Button/CreateWorkSpaceButton';
-import { getWorkspaceById } from '@/utils/tasks';
+import { getCurrentWorkspace } from '@/utils/tasks';
 import { getLoggedInUser } from '@/utils/auth';
 import { User } from '@prisma/client';
 
 export default async function Header() {
-  const workspace = await getWorkspaceById();
+  const workspace = await getCurrentWorkspace();
   const user = getLoggedInUser();
   return (
     <nav
@@ -14,7 +14,7 @@ export default async function Header() {
       aria-label="Global"
     >
       <span className="text-xl font-medium leading-none capitalize text-gray-900 text-opacity-80">
-        {workspace?.name || 'Workspace'}
+        {workspace?.name || 'No Workspace'}
       </span>
       <div className="">
         <CreateWorkSpaceButton
