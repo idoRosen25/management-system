@@ -1,4 +1,9 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+<div align="center">
+<img alt="vercel" src="https://vercelbadge.vercel.app/api/idoRosen25/management-system?style=for-the-badge">
+<img alt="GitHub issues" src="https://img.shields.io/github/issues/idoRosen25/management-system?style=for-the-badge">
+<img alt="GitHub pull requests" src="https://img.shields.io/github/issues-pr/idoRosen25/management-system?style=for-the-badge">
+<img alt="contributors" src="https://img.shields.io/github/contributors/idoRosen25/management-system?style=for-the-badge">
+</div>
 
 ## Getting Started
 
