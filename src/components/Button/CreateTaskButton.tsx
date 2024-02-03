@@ -1,8 +1,6 @@
 'use client';
-import Link from 'next/link';
 import CreateTaskModal from '../Modal/CreateTaskModal';
 import Button from './Button';
-import { useSearchParams, usePathname, useRouter } from 'next/navigation';
 import { useState } from 'react';
 
 const CreateTaskButton = ({ className = '' }: { className?: string }) => {

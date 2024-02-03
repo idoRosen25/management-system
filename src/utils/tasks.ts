@@ -1,5 +1,6 @@
-import { Task, TaskStatus, User } from '@prisma/client';
+import { Task, TaskStatus, User, Team, Workspace } from '@prisma/client';
 import prisma from '../../lib/prismadb';
+import { getLoggedInUser } from './auth';
 
 export const getTasks = async (
   status?: TaskStatus,
@@ -39,4 +40,37 @@ export const getTasks = async (
     ...task,
     assignedTo: task.assignedTo?.assignee,
   }));
+};
+
+export const getTeamById = async () => {
+  const userId = getLoggedInUser()?.teamId;
+  if (!userId) return null;
+  const team = await prisma.team.findUnique({
+    where: {
+      id: userId,
+    },
+  });
+  return team as Team;
+};
+
+export const getCurrentWorkspace = async () => {
+  const userId = getLoggedInUser()?.teamId;
+  if (!userId) return null;
+  const workspace = await prisma.workspace.findFirst({
+    where: {
+      teamId: userId,
+    },
+  });
+  return workspace as Workspace;
+};
+
+export const getAllWorkspaces = async () => {
+  const userId = getLoggedInUser()?.teamId;
+  if (!userId) return null;
+  const workspaces = await prisma.workspace.findMany({
+    where: {
+      teamId: userId,
+    },
+  });
+  return workspaces;
 };

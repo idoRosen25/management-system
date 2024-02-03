@@ -9,7 +9,7 @@ export default function Page({ searchParams }: InvitePageProps) {
   const { email, teamId, role } = searchParams;
   const user = getLoggedInUser();
   return (
-    <div className="w-screen h-screen flex items-center justify-center bg-green-500">
+    <div className="w-screen h-screen flex items-center justify-center bg-blue-700 bg-opacity-70">
       {user && teamId && email ? (
         <div className="bg-white rounded-lg p-4">
           <LoginForm email={email} />

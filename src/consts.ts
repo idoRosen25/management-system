@@ -5,9 +5,11 @@ export enum Routes {
   DASHBOARD = '/dashboard',
   USER = '/user',
   INVITE = '/invite',
+  WORKSPACE = '/workspace',
 }
 
 export enum Endpoints {
   AUTH = '/auth',
   TASKS = '/tasks',
+  WORKSPACE = '/workspace',
 }

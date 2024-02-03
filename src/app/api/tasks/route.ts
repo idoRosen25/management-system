@@ -1,11 +1,13 @@
 import { NextRequest, NextResponse } from 'next/server';
 import prisma from '../../../../lib/prismadb';
+import { getCurrentWorkspace } from '../../../utils/tasks';
 import { getLoggedInUser } from '../../../utils/auth';
 
 export async function POST(request: NextRequest) {
   try {
-    const { title, description, assigneeEmail , status } = await request.json();
+    const { title, description, assigneeEmail, status } = await request.json();
     const creatorEmail = getLoggedInUser()?.email;
+    const workspace = await getCurrentWorkspace();
     if (!creatorEmail) throw new Error('No reporter email found');
 
     const task = await prisma.$transaction(async () => {
@@ -14,7 +16,8 @@ export async function POST(request: NextRequest) {
           title,
           description,
           creatorEmail,
-          status
+          status,
+          workspaceId: workspace?.id,
         },
       });
       try {
