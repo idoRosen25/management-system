@@ -34,6 +34,7 @@ jobs:
           # The default PostgreSQL port
           POSTGRES_PORT: 5432
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          POSTGRES_URL_NON_POOLING: ${{ secrets.POSTGRES_URL_NON_POOLING }}
       - uses: actions/upload-artifact@v3
         if: always()
         with:
