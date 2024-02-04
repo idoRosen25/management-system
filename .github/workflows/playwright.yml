@@ -29,6 +29,8 @@ jobs:
         env:
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
           POSTGRES_URL_NON_POOLING: ${{ secrets.POSTGRES_URL_NON_POOLING }}
+          VERCEL_EMAIL_API_KEY: ${{ secrets.VERCEL_EMAIL_API_KEY }}
+          VERCEL_EMAIL_SENDER: ${{ secrets.VERCEL_EMAIL_SENDER }}
       - name: Run Playwright tests
         run: npx playwright test
         env:
