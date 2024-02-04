@@ -16,7 +16,6 @@ test('load login page', async ({ page }) => {
 
 test('check db', async () => {
   const users = await prisma.user.findMany();
-  console.log(users);
   expect(users).toBeTruthy();
 });
 
