@@ -32,7 +32,7 @@ jobs:
           VERCEL_EMAIL_API_KEY: ${{ secrets.VERCEL_EMAIL_API_KEY }}
           VERCEL_EMAIL_SENDER: ${{ secrets.VERCEL_EMAIL_SENDER }}
       - name: Run Playwright tests
-        run: npx playwright test
+        run: npx playwright test --workers=2 --debug --reporter=list
         env:
           # The hostname used to communicate with the PostgreSQL service container
           POSTGRES_HOST: postgres
