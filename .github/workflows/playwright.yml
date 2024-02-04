@@ -26,6 +26,9 @@ jobs:
         run: npm ci
       - name: Install Playwright Browsers
         run: npm run build && npx playwright install --with-deps
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          POSTGRES_URL_NON_POOLING: ${{ secrets.POSTGRES_URL_NON_POOLING }}
       - name: Run Playwright tests
         run: npx playwright test
         env:
@@ -34,7 +37,7 @@ jobs:
           # The default PostgreSQL port
           POSTGRES_PORT: 5432
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
-          POSTGRES_URL_NON_POOLING: ${{ secrets.POSTGRES_URL_NON_POOLING }}
+
       - uses: actions/upload-artifact@v3
         if: always()
         with:
