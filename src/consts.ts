@@ -15,9 +15,8 @@ export enum Endpoints {
   AUTH = '/auth',
   TASKS = '/tasks',
 }
-
 export const User = {
-  email: 'may74@gmail.com',
+  email: 'test@gmail.com',
   password: '123123',
   name: 'test',
   teamName: 'test',
