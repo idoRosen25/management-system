@@ -11,6 +11,7 @@ export const SendInviteEmail = async (
   subject: string,
 ): Promise<CreateEmailResponse | null> => {
   try {
+    console.log('Sending email to:', email);
     // TODO: change from address to actual platform email - need to purchasedomain. currently not developed
     const sendResponse = await resend.emails.send({
       from: SenderString,
